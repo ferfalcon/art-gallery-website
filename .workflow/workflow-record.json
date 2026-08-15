@@ -6,7 +6,7 @@
     "executionMode": "Gated"
   },
   "state": {
-    "stage": 3,
+    "stage": 4,
     "status": "Ready",
     "activeInputs": [
       "SRC-DS-001",
@@ -74,6 +74,22 @@
       "method": "Pinned commit and frontend subtree comparison",
       "evidence": "SRC-REPO-001 remains the immutable implementation baseline. Current main differs from it only through workflow/control documentation; the frontend subtree has not changed.",
       "checkedAt": "2026-08-15T23:21:00.000Z"
+    },
+    {
+      "id": "VER-006",
+      "snapshot": "SRC-DS-001",
+      "result": "Unchanged",
+      "method": "Figma six-screen visual comparison",
+      "evidence": "Re-inspected Home and Location at the approved 1440 px, 768 px, and 375 px anchors. Responsive transformations, map treatment, footer themes, and primary navigation patterns remain unchanged from the approved Stage 3 design intent.",
+      "checkedAt": "2026-08-15T23:54:00.000Z"
+    },
+    {
+      "id": "VER-007",
+      "snapshot": "SRC-REPO-001",
+      "result": "Unchanged",
+      "method": "Pinned commit and frontend subtree comparison",
+      "evidence": "Compared SRC-REPO-001 with current main. Changes remain limited to workflow/control documentation and the AGENTS.md project-purpose wording correction; the frontend subtree is unchanged.",
+      "checkedAt": "2026-08-15T23:54:00.000Z"
     }
   ],
   "artifacts": [
@@ -153,6 +169,19 @@
       ],
       "statusChangedAt": "2026-08-15T23:34:00.000Z",
       "statusEvidence": "Stage 3 design intent completed, reviewed in two passes, and explicitly approved by the project owner.",
+      "statusBy": "Fernando Falcon"
+    },
+    {
+      "id": "ART-SPEC",
+      "type": "SPEC",
+      "path": "SPEC.md",
+      "status": "Approved",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "statusChangedAt": "2026-08-15T23:54:00.000Z",
+      "statusEvidence": "Stage 4 specification completed, reviewed in two passes, and explicitly approved by the project owner.",
       "statusBy": "Fernando Falcon"
     }
   ],
@@ -250,6 +279,32 @@
       ],
       "evidence": "Stage 3 design intent completed with both required review passes, no blocking questions, and explicit project-owner approval. The workflow intentionally remains at Stage 3 and is not advanced.",
       "recordedAt": "2026-08-15T23:34:00.000Z",
+      "approvedBy": "Fernando Falcon"
+    },
+    {
+      "id": "GATE-005",
+      "stage": 4,
+      "status": "Active",
+      "result": "Passed",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "verifications": [
+        "VER-006",
+        "VER-007"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE",
+        "ART-DESIGN-AUDIT",
+        "ART-REQUIREMENTS",
+        "ART-DESIGN",
+        "ART-SPEC"
+      ],
+      "evidence": "Stage 4 specification completed with both required review passes, no blocking questions, fresh source verification, and explicit project-owner approval. The workflow intentionally remains at Stage 4 and is not advanced.",
+      "recordedAt": "2026-08-15T23:54:00.000Z",
       "approvedBy": "Fernando Falcon"
     }
   ],
