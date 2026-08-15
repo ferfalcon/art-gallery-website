@@ -6,7 +6,7 @@
     "executionMode": "Gated"
   },
   "state": {
-    "stage": 2,
+    "stage": 3,
     "status": "Ready",
     "activeInputs": [
       "SRC-DS-001",
@@ -58,6 +58,22 @@
       "method": "Figma structure comparison",
       "evidence": "Re-inspected 🤖 Workflow (2148:2) at Stage 2 entry; the six Home and Location screen frames, supporting component sets, and documented viewport dimensions still match the approved Stage 1 evidence.",
       "checkedAt": "2026-08-15T21:10:41.000Z"
+    },
+    {
+      "id": "VER-004",
+      "snapshot": "SRC-DS-001",
+      "result": "Unchanged",
+      "method": "Figma metadata and six-screen visual comparison",
+      "evidence": "Re-inspected the approved 🤖 Workflow page and fresh screenshots for Home and Location at desktop, tablet, and mobile. The Stage 3 design source still matches the approved Stage 1 evidence and Stage 2 requirements.",
+      "checkedAt": "2026-08-15T23:21:00.000Z"
+    },
+    {
+      "id": "VER-005",
+      "snapshot": "SRC-REPO-001",
+      "result": "Unchanged",
+      "method": "Pinned commit and frontend subtree comparison",
+      "evidence": "SRC-REPO-001 remains the immutable implementation baseline. Current main differs from it only through workflow/control documentation; the frontend subtree has not changed.",
+      "checkedAt": "2026-08-15T23:21:00.000Z"
     }
   ],
   "artifacts": [
@@ -124,6 +140,19 @@
       ],
       "statusChangedAt": "2026-08-15T22:26:00.000Z",
       "statusEvidence": "Stage 2 requirements completed, reviewed in two passes, and explicitly approved by the project owner.",
+      "statusBy": "Fernando Falcon"
+    },
+    {
+      "id": "ART-DESIGN",
+      "type": "DESIGN",
+      "path": "DESIGN.md",
+      "status": "Approved",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "statusChangedAt": "2026-08-15T23:34:00.000Z",
+      "statusEvidence": "Stage 3 design intent completed, reviewed in two passes, and explicitly approved by the project owner.",
       "statusBy": "Fernando Falcon"
     }
   ],
@@ -196,6 +225,31 @@
       ],
       "evidence": "Stage 2 requirements completed with both required review passes, no blocking questions, and explicit project-owner approval. The workflow intentionally remains at Stage 2 and is not advanced.",
       "recordedAt": "2026-08-15T22:26:01.000Z",
+      "approvedBy": "Fernando Falcon"
+    },
+    {
+      "id": "GATE-004",
+      "stage": 3,
+      "status": "Active",
+      "result": "Passed",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "verifications": [
+        "VER-004",
+        "VER-005"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE",
+        "ART-DESIGN-AUDIT",
+        "ART-REQUIREMENTS",
+        "ART-DESIGN"
+      ],
+      "evidence": "Stage 3 design intent completed with both required review passes, no blocking questions, and explicit project-owner approval. The workflow intentionally remains at Stage 3 and is not advanced.",
+      "recordedAt": "2026-08-15T23:34:00.000Z",
       "approvedBy": "Fernando Falcon"
     }
   ],
