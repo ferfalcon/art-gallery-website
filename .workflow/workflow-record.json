@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "project": {
+    "name": "Art gallery website",
+    "profile": "Standard",
+    "executionMode": "Gated"
+  },
+  "state": {
+    "stage": 0,
+    "status": "In progress",
+    "activeInputs": [
+      "SRC-DS-001",
+      "SRC-REPO-001"
+    ],
+    "currentTask": null,
+    "latestOutput": null,
+    "latestValidationRuntime": null,
+    "architectureDecision": null
+  },
+  "snapshots": [
+    {
+      "id": "SRC-DS-001",
+      "role": "Input baseline",
+      "pinStrength": "Time-bound",
+      "status": "Unverified",
+      "reference": "https://www.figma.com/design/g2a8iUAviJAsHl5PBUwaUY/art-gallery-website?node-id=2148-2"
+    },
+    {
+      "id": "SRC-REPO-001",
+      "role": "Input baseline",
+      "pinStrength": "Immutable",
+      "status": "Unverified",
+      "reference": ".",
+      "commit": "fa000a21be23460757fdf09a4c9e49a677f695fb"
+    }
+  ],
+  "verifications": [],
+  "artifacts": [
+    {
+      "id": "ART-SOURCE-BASELINE",
+      "type": "SOURCE-BASELINE",
+      "path": "SOURCE-BASELINE.md",
+      "status": "Draft",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ]
+    },
+    {
+      "id": "ART-PROJECT-CONTEXT",
+      "type": "PROJECT-CONTEXT",
+      "path": "PROJECT-CONTEXT.md",
+      "status": "Draft",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ]
+    },
+    {
+      "id": "ART-WORKFLOW-STATE",
+      "type": "WORKFLOW-STATE",
+      "path": "WORKFLOW-STATE.md",
+      "status": "Draft",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ]
+    }
+  ],
+  "traceItems": [],
+  "gates": [],
+  "tasks": [],
+  "profileTransitions": [],
+  "implementationReviews": []
+}
