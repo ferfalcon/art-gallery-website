@@ -7,7 +7,7 @@
   },
   "state": {
     "stage": 3,
-    "status": "In progress",
+    "status": "Ready",
     "activeInputs": [
       "SRC-DS-001",
       "SRC-REPO-001"
@@ -146,13 +146,14 @@
       "id": "ART-DESIGN",
       "type": "DESIGN",
       "path": "DESIGN.md",
-      "status": "Reviewed",
+      "status": "Approved",
       "baseline": [
         "SRC-DS-001",
         "SRC-REPO-001"
       ],
-      "statusChangedAt": "2026-08-15T23:21:00.000Z",
-      "statusEvidence": "Stage 3 design intent completed and reviewed in two passes; ready for explicit project-owner gate approval."
+      "statusChangedAt": "2026-08-15T23:34:00.000Z",
+      "statusEvidence": "Stage 3 design intent completed, reviewed in two passes, and explicitly approved by the project owner.",
+      "statusBy": "Fernando Falcon"
     }
   ],
   "traceItems": [],
@@ -224,6 +225,31 @@
       ],
       "evidence": "Stage 2 requirements completed with both required review passes, no blocking questions, and explicit project-owner approval. The workflow intentionally remains at Stage 2 and is not advanced.",
       "recordedAt": "2026-08-15T22:26:01.000Z",
+      "approvedBy": "Fernando Falcon"
+    },
+    {
+      "id": "GATE-004",
+      "stage": 3,
+      "status": "Active",
+      "result": "Passed",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "verifications": [
+        "VER-004",
+        "VER-005"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE",
+        "ART-DESIGN-AUDIT",
+        "ART-REQUIREMENTS",
+        "ART-DESIGN"
+      ],
+      "evidence": "Stage 3 design intent completed with both required review passes, no blocking questions, and explicit project-owner approval. The workflow intentionally remains at Stage 3 and is not advanced.",
+      "recordedAt": "2026-08-15T23:34:00.000Z",
       "approvedBy": "Fernando Falcon"
     }
   ],
