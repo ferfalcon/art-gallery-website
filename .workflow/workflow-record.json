@@ -7,7 +7,7 @@
   },
   "state": {
     "stage": 1,
-    "status": "In progress",
+    "status": "Ready",
     "activeInputs": [
       "SRC-DS-001",
       "SRC-REPO-001"
@@ -96,11 +96,14 @@
       "id": "ART-DESIGN-AUDIT",
       "type": "DESIGN-AUDIT",
       "path": "DESIGN-AUDIT.md",
-      "status": "Draft",
+      "status": "Approved",
       "baseline": [
         "SRC-DS-001",
         "SRC-REPO-001"
-      ]
+      ],
+      "statusChangedAt": "2026-08-15T20:56:00.000Z",
+      "statusEvidence": "Stage 1 design audit completed, reviewed in two passes, and explicitly approved by the project owner.",
+      "statusBy": "Fernando Falcon"
     }
   ],
   "traceItems": [],
@@ -125,6 +128,29 @@
       ],
       "evidence": "Stage 0 sources reverified unchanged; source baseline, project context, and workflow controls reviewed and explicitly approved by the project owner.",
       "recordedAt": "2026-08-15T20:33:00.000Z",
+      "approvedBy": "Fernando Falcon"
+    },
+    {
+      "id": "GATE-002",
+      "stage": 1,
+      "status": "Active",
+      "result": "Passed",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "verifications": [
+        "VER-001",
+        "VER-002"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE",
+        "ART-DESIGN-AUDIT"
+      ],
+      "evidence": "Stage 1 design audit completed with both required review passes, no blocking findings, and explicit project-owner approval. The workflow intentionally remains at Stage 1 and is not advanced.",
+      "recordedAt": "2026-08-15T20:56:00.000Z",
       "approvedBy": "Fernando Falcon"
     }
   ],
