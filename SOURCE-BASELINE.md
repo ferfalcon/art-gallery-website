@@ -28,8 +28,7 @@ updated: 2026-08-15
 - **Supporting design evidence:** component resources and style-guide documentation on the same page.
 - **Authority:** approved visual and responsive implementation source for this project.
 - **Pin strength:** time-bound until a named/versioned Figma revision is recorded.
-- **Initialization evidence:** the page and screen structure were inspected through the connected Figma source on 2026-08-15.
-- **Verification state:** the canonical verification event still needs to be recorded through the workflow CLI before Stage 0 can pass.
+- **Verification:** `VER-001` — Unchanged on 2026-08-15 via Figma structure comparison.
 - **Known limitation:** Figma does not by itself define semantic HTML, keyboard/screen-reader behavior, intermediate responsive behavior, or runtime performance.
 
 ## Repository source evidence
@@ -45,14 +44,13 @@ updated: 2026-08-15
 - **Baseline branch at capture:** `main`
 - **Reference in canonical record:** `.`
 - **Pin strength:** immutable commit SHA.
-- **Initialization evidence:** repository contract, frontend instructions, package manifest, and current tree were inspected through the connected GitHub source on 2026-08-15.
-- **Verification state:** the canonical verification event still needs to be recorded through the workflow CLI before Stage 0 can pass.
+- **Verification:** `VER-002` — Unchanged on 2026-08-15; GitHub `main` still resolves to the baseline commit.
 
 ## Runtime source evidence
 
 - Production URL: `https://art-gallery-website-ferfalcon.vercel.app/`
 - Vercel project: `fer-falcons-team/art-gallery-website`
-- A runtime snapshot has not yet been registered as an active Stage 0 input.
+- A runtime snapshot is not an active input at this stage.
 
 ## Source authority
 
@@ -60,6 +58,12 @@ updated: 2026-08-15
 |---|---|---|
 | `SRC-DS-001` | Design | Visual design, responsive compositions, components, styles, imagery, and content represented in Figma |
 | `SRC-REPO-001` | Current implementation / technical constraint | Repository structure, Astro setup, package/runtime constraints, project operating contract |
+
+## Stage 0 review
+
+- Both active inputs were reverified unchanged.
+- The project owner explicitly approved the Stage 0 baseline on 2026-08-15.
+- Stage 0 passed and the workflow advanced to the design-audit stage.
 
 ## Rebaseline rule
 

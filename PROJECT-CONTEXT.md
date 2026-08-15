@@ -19,9 +19,9 @@ updated: 2026-08-15
 
 ## Active source baseline
 
-- Design input: `SRC-DS-001`
-- Repository input: `SRC-REPO-001`
-- Detailed source evidence: `SOURCE-BASELINE.md`
+- Design input: `SRC-DS-001` — verified unchanged as `VER-001`.
+- Repository input: `SRC-REPO-001` — verified unchanged as `VER-002`.
+- Detailed source evidence: `SOURCE-BASELINE.md`.
 
 ## Design scope
 
@@ -57,13 +57,17 @@ updated: 2026-08-15
 - Run actual build/validation checks before claiming success.
 - Verify visual implementation against Figma and, when deployment behavior matters, against the Vercel preview.
 
-## Initial risks and questions
+## Current risks and questions
 
-### Blocking for Stage 0 completion
+### Blocking
 
-- Canonical source verification events have not yet been recorded for `SRC-DS-001` and `SRC-REPO-001`.
-- Stage 0 artifacts remain Draft until reviewed/approved through the workflow lifecycle.
+- None at Stage 1 entry.
 
 ### Non-blocking
 
 - Architecture remains undecided until Stage 6; current evidence suggests it may be explicitly skippable for this static Astro implementation.
+- Semantic, keyboard, assistive-technology, and intermediate responsive behavior require implementation-side definition because Figma cannot prove them.
+
+## Stage 0 decision
+
+The active inputs and control artifacts were reviewed and explicitly approved by the project owner on 2026-08-15. The workflow is ready for the pinned design evidence audit.

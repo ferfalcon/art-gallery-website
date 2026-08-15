@@ -17,7 +17,7 @@ updated: 2026-08-15
 
 | ID | Question | Impact | Required before | Status |
 |---|---|---|---|---|
-| WF-001 | Record canonical verification for both active Stage 0 inputs. | Stage 0 cannot pass without verified material inputs. | Stage 0 review | Open |
+| WF-001 | Record canonical verification for both active Stage 0 inputs. | Stage 0 source integrity. | Stage 0 review | Resolved — `VER-001`, `VER-002` |
 
 ## Non-blocking assumptions
 
@@ -31,16 +31,20 @@ updated: 2026-08-15
 - Separate `ARCHITECTURE.md`: Undecided.
 - Decision is deferred to Stage 6 as required by the Standard profile.
 
-## Initialization history
+## Source verification and stage history
 
 | Date | Event | Evidence | Result |
 |---|---|---|---|
 | 2026-08-15 | Formal workflow initialized | Figma `🤖 Workflow` scope and GitHub `main` baseline inspected | Stage 0 In progress |
+| 2026-08-15 | Design baseline reverified | `VER-001` | Unchanged |
+| 2026-08-15 | Repository baseline reverified | `VER-002` | Unchanged |
+| 2026-08-15 | Stage 0 owner decision | Explicit user approval | `GATE-001` Passed |
+| 2026-08-15 | Stage advancement | Passing Stage 0 gate | Stage 1 entered |
 
 ## Exceptions and deviations
 
-None recorded.
+The connected environment does not expose an executable checkout in which to invoke `design-workflow` directly. Workflow mutations are being applied against the repository's schema-v2 contract and deterministic generated-state rules through the connected GitHub interface; this limitation must remain visible until a CLI-backed validation is executed.
 
 ## Next permitted action
 
-Verify `SRC-DS-001` and `SRC-REPO-001`, complete the Stage 0 narrative review, then record the Stage 0 gate decision. In Gated mode, do not advance to Stage 1 without explicit approval.
+Complete `DESIGN-AUDIT.md` from the active Figma baseline. In Gated mode, do not advance to Stage 2 until the audit is reviewed, approved, and the project owner explicitly approves the Stage 1 gate.
