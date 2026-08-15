@@ -10,7 +10,7 @@ This repository implements the Suite landing page from the approved design sourc
 - Frontend application: `frontend/`
 - Framework: Astro + TypeScript
 - Package manager: pnpm
-- Node.js: follow `frontend/package.json` (`>=22.12.0`)
+- Node.js: follow `frontend/package.json` (`24.x`)
 - Figma design: `https://www.figma.com/design/g2a8iUAviJAsHl5PBUwaUY/art-gallery-website?node-id=2148-2`
 - Primary Figma page: `🤖 Workflow` (`2148:2`)
 - Vercel team: `fer-falcons-team`
