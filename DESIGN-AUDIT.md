@@ -12,7 +12,7 @@ updated: 2026-08-15
 ## 1. Document information
 
 - Lifecycle state: Draft; canonical lifecycle is owned by `.workflow/workflow-record.json`.
-- Version: 0.2
+- Version: 0.3
 - Last updated: 2026-08-15
 - Auditor: ChatGPT
 - Project: Art gallery website
@@ -63,7 +63,7 @@ The audit does not define semantic HTML, keyboard behavior, breakpoints, routing
 | `SRC-DS-001` | Resources / Components | Figma section | `2148:871` | Reusable components and variants | Yes |
 | `SRC-DS-001` | Documentation / Style Guide | Figma section | `2148:872` | Typography, color, spacing, and supporting documentation | Yes |
 
-`SRC-DS-001` is a mutable Figma URL and therefore remains a time-bound snapshot. Stage 1 used the same active file state that was verified as unchanged at Stage 0 entry.
+`SRC-DS-001` is a mutable Figma URL and therefore remains a time-bound snapshot. Stage 1 inspected the same source identity and scoped nodes as the active Stage 0 baseline; no material design change was observed during the Stage 1 inspection.
 
 ## 5. Evidence classification
 
@@ -235,10 +235,10 @@ No detached replacement of the primary Home/Location responsive components was o
 
 | Evidence ID | Interaction | Trigger | Observed result | Motion or timing | Snapshot and source reference | Certainty |
 |---|---|---|---|---|---|---|
-| `EVD-046` | Home → Location | Click / tap on `OUR LOCATION` | Navigates to matching Location viewport frame | No page transition specified | CTA instances in `2148:1957`, `2148:2140`, `2148:2169` | Observed |
-| `EVD-047` | Location → Home | Click / tap on `BACK TO HOME` | Navigates to matching Home viewport frame | No page transition specified | CTA instances in `2148:2069`, `2148:2196`, `2148:2218` | Observed |
+| `EVD-046` | Home → Location | `ON_CLICK` on `OUR LOCATION` | Navigates to matching Location viewport frame | No page transition specified | CTA instances in `2148:1957`, `2148:2140`, `2148:2169` | Observed |
+| `EVD-047` | Location → Home | `ON_CLICK` on `BACK TO HOME` | Navigates to matching Home viewport frame | No page transition specified | CTA instances in `2148:2069`, `2148:2196`, `2148:2218` | Observed |
 | `EVD-048` | Primary CTA hover | `ON_HOVER` | Changes component state from Default to Hover | Dissolve, ease-out, 0.2 s | `8:199` → `8:201`; `16:265` → `16:280` | Observed |
-| `EVD-049` | Primary CTA focus appearance | Focus variant supplied | Gold 4 px focus-ring stroke around the control while retaining default label/icon colors | No prototype focus trigger observed | `8:229`, `16:270` | Observed visual state; interaction semantics unresolved |
+| `EVD-049` | Primary CTA focus appearance | Focus variant supplied | Focus variant adds an oversized light-gray backdrop/ring node with a 4 px gold stroke while retaining the default label/icon color treatment | No prototype focus trigger observed | `8:229`, `16:270` | Observed visual state; interaction semantics unresolved |
 
 The focus variants demonstrate visual intent only. Figma does not prove keyboard focusability, focus order, focus return behavior, or browser focus-event mapping.
 
@@ -275,7 +275,7 @@ No licensing metadata was observed in the audited component descriptions. Asset 
 
 ## 15. Accessibility observations
 
-- **Observed — `EVD-059`:** both primary navigation components provide explicit Focus variants with a 4 px gold outline-style ring extending outside the 260 × 72 control.
+- **Observed — `EVD-059`:** both primary navigation components provide explicit Focus variants with a 4 px gold-stroke focus-ring treatment extending outside the 260 × 72 control; the ring node also has a light-gray fill behind the control.
 - **Observed:** primary CTA visual targets are 260 × 72, providing a large visible interaction area in all supplied viewport variants.
 - **Observed:** social icon artwork is approximately 20 × 20 px, but Figma does not demonstrate the eventual clickable hit area, accessible name, focus treatment, or destination.
 - **Observed:** heading prominence is visually clear through typography scale and placement, but semantic heading levels and landmark structure are not defined by the source.
@@ -354,40 +354,41 @@ No Stage 1 finding requires changing the selected Standard profile.
 
 - Verification date: 2026-08-15.
 - Method: connected Figma structure/programmatic inspection of `🤖 Workflow`, targeted node inspection for all six screen frames, component/variant inventory, local variable and text-style inventory, prototype reaction inspection, responsive geometry inspection, and rendered screenshot generation for all six target screens.
-- Active snapshot status: Verified unchanged relative to the Stage 0 structure baseline (`VER-001`).
-- Repository snapshot status: unchanged at Stage 1 entry (`VER-002`); repository content was used only for project context, not to override design evidence.
-- Newer source content detected: No material source change observed during the audit.
-- Action required: none for source integrity; unresolved evidence questions are recorded above.
+- Canonical workflow verification: `VER-001` remains the latest recorded verification for `SRC-DS-001`; it was recorded at Stage 0 as `Unchanged`.
+- Stage 1 inspection result: no material design change was observed in the scoped source identity or audited nodes.
+- Repository context: `SRC-REPO-001` remains the immutable implementation-input baseline. Current `main` has advanced only through the merge of the workflow-initialization branch relative to that baseline; the compared change set contains workflow/control artifacts and no frontend implementation files.
+- Newer material design content detected: No.
+- Action required: none for Stage 1 source integrity; unresolved evidence questions are recorded above.
 
 ## 21. Audit review
 
 ### Review pass 1 — Completeness and correctness
 
-- [ ] The full agreed pinned design scope was inspected.
-- [ ] Material screens, flows, components, states, and viewports are inventoried.
-- [ ] Important observations include snapshot IDs and precise source references.
-- [ ] Missing evidence, inconsistencies, and source limitations are recorded.
-- [ ] Accessibility implications are included.
+- [x] The full agreed pinned design scope was inspected.
+- [x] Material screens, flows, components, states, and viewports are inventoried.
+- [x] Important observations include snapshot IDs and precise source references.
+- [x] Missing evidence, inconsistencies, and source limitations are recorded.
+- [x] Accessibility implications are included.
 
-Review status: Pending formal pass after this audit draft is checked against the Stage 1 prompt, Figma source adapter, and audit template.
+Review result: Passed on 2026-08-15 after checking the audit against the Stage 1 prompt, Figma source adapter, audit template, six target screen frames, component resources, local styles/variables, responsive geometry, prototype reactions, and focus-state details. Corrections made: clarified the Stage 1 inspection versus canonical `VER-001`; refined focus-state visual evidence and `ON_CLICK` wording.
 
 ### Review pass 2 — Consistency, traceability, source integrity, and uncertainty
 
-- [ ] Snapshot IDs exist and match `SOURCE-BASELINE.md`.
-- [ ] No evidence silently uses newer source content.
-- [ ] Confirmed, observed, inferred, recommended, and open information remain distinct.
-- [ ] No product rule or implementation decision was invented.
-- [ ] Evidence identifiers and source references are internally consistent.
-- [ ] Questions are categorized and blocking status is clear.
+- [x] Snapshot IDs exist and match `SOURCE-BASELINE.md`.
+- [x] No evidence silently uses newer source content.
+- [x] Confirmed, observed, inferred, recommended, and open information remain distinct.
+- [x] No product rule or implementation decision was invented.
+- [x] Evidence identifiers and source references are internally consistent.
+- [x] Questions are categorized and blocking status is clear.
 
-Review status: Pending after pass-1 corrections.
+Review result: Passed on 2026-08-15. `EVD-001` through `EVD-059` and `AUD-001` through `AUD-008` are unique and internally consistent. The Figma source remains time-bound, open questions are explicitly non-blocking for Stage 1, and the Standard profile remains proportional. Repository comparison confirmed that `main` moved from `SRC-REPO-001` only by merging workflow/control artifacts; no frontend implementation change was introduced by that merge.
 
 ## 22. Completion summary
 
 - Files created or modified: `DESIGN-AUDIT.md`.
 - Snapshot IDs used: `SRC-DS-001`, `SRC-REPO-001` for repository context only.
-- Source verification performed: Figma scope, six target screens, responsive component variants, styles/variables, interactions, states, and assets inspected; Stage 0 snapshot verification remains unchanged.
+- Source verification performed: Figma scope, six target screens, responsive component variants, styles/variables, interactions, states, and assets inspected; the canonical design verification remains `VER-001`, with no material Stage 1 design change observed.
 - Important findings: responsive behavior is supplied at three anchors; primary CTAs include explicit focus visuals; social-link behavior is underspecified; mobile footer padding differs by theme; map crops use different structures across viewports.
 - Assumptions introduced: limited to the explicitly labeled Inferred section.
 - Open questions or blockers: no Stage 1 blocker; social destinations and some responsive/accessibility behavior require later resolution.
-- Ready for requirements: Pending completion of both audit review passes and Stage 1 owner approval.
+- Ready for requirements: Yes, subject to artifact approval and the explicit Stage 1 owner gate required by Gated mode.
