@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repository implements the Suite landing page from the approved design source. Agents working here must preserve design fidelity, accessibility, maintainability, and traceability between Figma, implementation, Git history, and deployments.
+This repository implements the Art gallery website from the approved design source. Agents working here must preserve design fidelity, accessibility, maintainability, and traceability between Figma, implementation, Git history, and deployments.
 
 ## Project sources
 
