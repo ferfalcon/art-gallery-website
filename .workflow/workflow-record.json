@@ -6,8 +6,8 @@
     "executionMode": "Gated"
   },
   "state": {
-    "stage": 1,
-    "status": "Ready",
+    "stage": 2,
+    "status": "In progress",
     "activeInputs": [
       "SRC-DS-001",
       "SRC-REPO-001"
@@ -50,6 +50,14 @@
       "method": "Git commit comparison",
       "evidence": "GitHub main remains at fa000a21be23460757fdf09a4c9e49a677f695fb, matching the recorded repository baseline.",
       "checkedAt": "2026-08-15T20:33:00.000Z"
+    },
+    {
+      "id": "VER-003",
+      "snapshot": "SRC-DS-001",
+      "result": "Unchanged",
+      "method": "Figma structure comparison",
+      "evidence": "Re-inspected 🤖 Workflow (2148:2) at Stage 2 entry; the six Home and Location screen frames, supporting component sets, and documented viewport dimensions still match the approved Stage 1 evidence.",
+      "checkedAt": "2026-08-15T21:10:41.000Z"
     }
   ],
   "artifacts": [
@@ -104,6 +112,16 @@
       "statusChangedAt": "2026-08-15T20:56:00.000Z",
       "statusEvidence": "Stage 1 design audit completed, reviewed in two passes, and explicitly approved by the project owner.",
       "statusBy": "Fernando Falcon"
+    },
+    {
+      "id": "ART-REQUIREMENTS",
+      "type": "REQUIREMENTS",
+      "path": "REQUIREMENTS.md",
+      "status": "Draft",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ]
     }
   ],
   "traceItems": [],
