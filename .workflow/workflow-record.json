@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 2,
+  "project": {
+    "name": "Art gallery website",
+    "profile": "Standard",
+    "executionMode": "Gated"
+  },
+  "state": {
+    "stage": 1,
+    "status": "In progress",
+    "activeInputs": [
+      "SRC-DS-001",
+      "SRC-REPO-001"
+    ],
+    "currentTask": null,
+    "latestOutput": null,
+    "latestValidationRuntime": null,
+    "architectureDecision": null
+  },
+  "snapshots": [
+    {
+      "id": "SRC-DS-001",
+      "role": "Input baseline",
+      "pinStrength": "Time-bound",
+      "status": "Active",
+      "reference": "https://www.figma.com/design/g2a8iUAviJAsHl5PBUwaUY/art-gallery-website?node-id=2148-2"
+    },
+    {
+      "id": "SRC-REPO-001",
+      "role": "Input baseline",
+      "pinStrength": "Immutable",
+      "status": "Active",
+      "reference": ".",
+      "commit": "fa000a21be23460757fdf09a4c9e49a677f695fb"
+    }
+  ],
+  "verifications": [
+    {
+      "id": "VER-001",
+      "snapshot": "SRC-DS-001",
+      "result": "Unchanged",
+      "method": "Figma structure comparison",
+      "evidence": "Re-inspected 🤖 Workflow (2148:2); Home and Location desktop, tablet, and mobile screens plus supporting resources match the Stage 0 baseline.",
+      "checkedAt": "2026-08-15T20:33:00.000Z"
+    },
+    {
+      "id": "VER-002",
+      "snapshot": "SRC-REPO-001",
+      "result": "Unchanged",
+      "method": "Git commit comparison",
+      "evidence": "GitHub main remains at fa000a21be23460757fdf09a4c9e49a677f695fb, matching the recorded repository baseline.",
+      "checkedAt": "2026-08-15T20:33:00.000Z"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "ART-SOURCE-BASELINE",
+      "type": "SOURCE-BASELINE",
+      "path": "SOURCE-BASELINE.md",
+      "status": "Approved",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "statusChangedAt": "2026-08-15T20:33:00.000Z",
+      "statusEvidence": "Stage 0 source baseline reviewed and approved by the project owner.",
+      "statusBy": "Fernando Falcon"
+    },
+    {
+      "id": "ART-PROJECT-CONTEXT",
+      "type": "PROJECT-CONTEXT",
+      "path": "PROJECT-CONTEXT.md",
+      "status": "Approved",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "statusChangedAt": "2026-08-15T20:33:00.000Z",
+      "statusEvidence": "Stage 0 project context reviewed and approved by the project owner.",
+      "statusBy": "Fernando Falcon"
+    },
+    {
+      "id": "ART-WORKFLOW-STATE",
+      "type": "WORKFLOW-STATE",
+      "path": "WORKFLOW-STATE.md",
+      "status": "Approved",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "statusChangedAt": "2026-08-15T20:33:00.000Z",
+      "statusEvidence": "Stage 0 workflow controls reviewed and approved by the project owner.",
+      "statusBy": "Fernando Falcon"
+    },
+    {
+      "id": "ART-DESIGN-AUDIT",
+      "type": "DESIGN-AUDIT",
+      "path": "DESIGN-AUDIT.md",
+      "status": "Draft",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ]
+    }
+  ],
+  "traceItems": [],
+  "gates": [
+    {
+      "id": "GATE-001",
+      "stage": 0,
+      "status": "Active",
+      "result": "Passed",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "verifications": [
+        "VER-001",
+        "VER-002"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE"
+      ],
+      "evidence": "Stage 0 sources reverified unchanged; source baseline, project context, and workflow controls reviewed and explicitly approved by the project owner.",
+      "recordedAt": "2026-08-15T20:33:00.000Z",
+      "approvedBy": "Fernando Falcon"
+    }
+  ],
+  "tasks": [],
+  "profileTransitions": [],
+  "implementationReviews": []
+}
