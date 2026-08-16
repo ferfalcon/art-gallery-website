@@ -34,13 +34,13 @@ jobs:
           set -euo pipefail
           mkdir -p frontend/src/assets/map
           BASE="https://raw.githubusercontent.com/vanzasetia/art-gallery-website/${GALLERY_SOURCE_COMMIT}/images"
-          curl -fsSL --retry 3 "${BASE}/desktop/image-map@2x.png" -o frontend/src/assets/map/desktop.png
-          curl -fsSL --retry 3 "${BASE}/tablet/image-map@2x.png" -o frontend/src/assets/map/tablet.png
-          curl -fsSL --retry 3 "${BASE}/mobile/image-map@2x.png" -o frontend/src/assets/map/mobile.png
-          file frontend/src/assets/map/*.png
-          test -s frontend/src/assets/map/desktop.png
-          test -s frontend/src/assets/map/tablet.png
-          test -s frontend/src/assets/map/mobile.png
+          curl -fsSL --retry 3 "${BASE}/desktop/image-map@2x.jpg" -o frontend/src/assets/map/desktop.jpg
+          curl -fsSL --retry 3 "${BASE}/tablet/image-map@2x.jpg" -o frontend/src/assets/map/tablet.jpg
+          curl -fsSL --retry 3 "${BASE}/mobile/image-map@2x.jpg" -o frontend/src/assets/map/mobile.jpg
+          file frontend/src/assets/map/*.jpg
+          test -s frontend/src/assets/map/desktop.jpg
+          test -s frontend/src/assets/map/tablet.jpg
+          test -s frontend/src/assets/map/mobile.jpg
       - name: Repair and extend asset provenance
         run: |
           cat > frontend/src/assets/SOURCES.md <<EOF
@@ -57,7 +57,7 @@ jobs:
           ## Gallery, map, and brand artwork
           - Local raster/SVG copies come from the Modern Art Gallery challenge asset snapshot \`vanzasetia/art-gallery-website\` at commit \`${GALLERY_SOURCE_COMMIT}\`, cross-checked against the approved Figma \`🤖 Workflow\` resources.
           - Gallery raster assets retain desktop, tablet, and mobile art-direction variants.
-          - Location map artwork retains the pinned \`images/{desktop,tablet,mobile}/image-map@2x.png\` variants under \`src/assets/map/\` so the approved crops do not depend on a live map service.
+          - Location map artwork retains the pinned \`images/{desktop,tablet,mobile}/image-map@2x.jpg\` variants under \`src/assets/map/\` so the approved crops do not depend on a live map service.
           - Brand artwork includes the approved logo, navigation arrows, marker, and social SVGs.
 
           ## Image semantics
