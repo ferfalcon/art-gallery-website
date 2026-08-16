@@ -1,7 +1,7 @@
 ---
 artifact: TASK
 id: P02-T02
-status: In progress
+status: Complete
 baseline:
   design: [SRC-DS-001]
   repository: [SRC-REPO-002]
@@ -20,7 +20,7 @@ Canonical task state, prerequisites, references, validation, and output lineage 
 
 ## 1. Status
 
-Stage 10 Location implementation is complete and all required validation has passed; canonical completion is recorded through the workflow CLI.
+Complete. The approved responsive Location route is implemented and all four required validations passed.
 
 ## 2. Objective
 
@@ -109,7 +109,7 @@ None. The earlier details-stack breakpoint is a conservative responsive adaptati
 
 ## 17. Output Lineage
 
-Validated Location implementation on the current task branch; canonical output snapshot identity is assigned by `task complete`.
+Implementation output commit: `54127d37918d8330ce5bade1b7c46be4682b7406`. The canonical workflow record owns the generated output snapshot and validation lineage.
 
 ## 18. Definition of Done
 
@@ -120,4 +120,4 @@ Validated Location implementation on the current task branch; canonical output s
 
 ## 19. Completion Report
 
-Implementation and all four required checks passed; canonical completion/output identity follows from `task complete`.
+Complete. Build, Accessibility, Responsive, and Visual checks passed. Implementation output commit: `54127d37918d8330ce5bade1b7c46be4682b7406`.
