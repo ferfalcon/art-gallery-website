@@ -1,7 +1,7 @@
 ---
 artifact: TASK
 id: P02-T02
-status: Ready
+status: In progress
 baseline:
   design: [SRC-DS-001]
   repository: [SRC-REPO-002]
@@ -20,7 +20,7 @@ Canonical task state, prerequisites, references, validation, and output lineage 
 
 ## 1. Status
 
-Ready for Stage 10 only after explicit Stage 9 approval. Implementation has not started.
+Stage 10 Location implementation is complete and all required validation has passed; canonical completion is recorded through the workflow CLI.
 
 ## 2. Objective
 
@@ -82,14 +82,14 @@ Static/default plus shared `BACK TO HOME` hover/focus. No map loading/interactio
 - **Location responsive reflow — Responsive, required:** map/details remain usable at anchors/intermediate/transition widths without overflow.
 - **Location visual fidelity — Visual, required:** approved map/details/navigation/Gold Footer compositions match without invented map interaction.
 
-All checks remain `Not executed` until Stage 10.
+All four required Stage 10 checks passed with recorded build, accessibility, responsive, and visual evidence.
 
 ## 13. Acceptance Criteria
 
-- [ ] `PLAN-004` objective and referenced Must behavior are implemented.
-- [ ] Map remains static and semantically non-interactive.
-- [ ] Accessibility/responsive/visual/build checks pass.
-- [ ] Output lineage and deviations are recorded.
+- [x] `PLAN-004` objective and referenced Must behavior are implemented.
+- [x] Map remains static and semantically non-interactive.
+- [x] Accessibility/responsive/visual/build checks pass.
+- [x] Output lineage and deviations are recorded.
 
 ## 14. Risks and Considerations
 
@@ -98,23 +98,26 @@ All checks remain `Not executed` until Stage 10.
 
 ## 15. Implementation Discoveries
 
-None during decomposition.
+- Responsive static map artwork uses pinned desktop/tablet/mobile JPEG variants; the adjacent semantic `<address>` carries the actual location information, so map artwork and marker remain decorative.
+- Real Chromium validation exposed tablet details overflow at 640px and 631px because the 223px + 398px columns plus 80px side padding need about 701px. The details therefore stack at the actual 700px layout-failure threshold, while the map retains the source-backed 630px mobile transformation.
+- The map wrapper is intentionally semantically neutral rather than a named or interactive region, avoiding faux map affordances and duplicate location semantics.
+- Asset provenance documentation was repaired while adding the pinned Location map files; runtime remains entirely source-controlled.
 
 ## 16. Deviations
 
-None during decomposition.
+None. The earlier details-stack breakpoint is a conservative responsive adaptation required to prevent measured overflow; it preserves all three approved anchor layouts and introduces no behavior deviation.
 
 ## 17. Output Lineage
 
-Pending Stage 10 implementation.
+Validated Location implementation on the current task branch; canonical output snapshot identity is assigned by `task complete`.
 
 ## 18. Definition of Done
 
-- [ ] Objective/acceptance criteria complete.
-- [ ] All required validation passes.
-- [ ] Source/output lineage and documentation are current.
-- [ ] No unapproved deviation/blocker remains.
+- [x] Objective/acceptance criteria complete.
+- [x] All required validation passes.
+- [x] Source/output lineage and documentation are current.
+- [x] No unapproved deviation/blocker remains.
 
 ## 19. Completion Report
 
-Pending Stage 10 implementation.
+Implementation and all four required checks passed; canonical completion/output identity follows from `task complete`.

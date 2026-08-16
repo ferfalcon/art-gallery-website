@@ -991,51 +991,61 @@
           "name": "Astro build",
           "kind": "Build",
           "required": true,
-          "status": "Not executed",
-          "expected": "`pnpm build` succeeds with the new `/location/` route and its static assets.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-004"
+          "status": "Passed",
+          "expected": "`pnpm build` succeeds with `/location/` and source-controlled map assets.",
+          "actual": "The final production Astro build succeeded, emitted dist/location/index.html, and emitted no client JavaScript files.",
+          "command": "pnpm install --frozen-lockfile && pnpm build; assert dist/location/index.html and no dist/*.js",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24 / frontend",
+          "executedAt": "2026-08-16T05:06:50Z",
+          "evidence": [
+            "Completion build plus successful Location verification run 31928156412."
           ],
-          "command": "pnpm build",
-          "environment": "frontend/"
+          "references": []
         },
         {
           "name": "Location accessibility",
           "kind": "Accessibility",
           "required": true,
-          "status": "Not executed",
-          "expected": "Location exposes semantic address/visit content, a native `BACK TO HOME` link, non-interactive map semantics, logical focus order, and visible focus.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-004"
-          ]
+          "status": "Passed",
+          "expected": "Address/visit semantics, native return link, static-map semantics, focus order, and visible focus pass.",
+          "actual": "Verified one page h1, one semantic address with exact location copy, native Back Home href=/, decorative map/marker treatment, no iframe/map SDK/geolocation/application role/client handlers, and inherited visible shared-action focus.",
+          "command": "Node source assertions plus rendered Chromium checks",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24 / Chrome",
+          "executedAt": "2026-08-16T05:06:50Z",
+          "evidence": [
+            "Successful Location verification run 31928156412."
+          ],
+          "references": []
         },
         {
           "name": "Location responsive reflow",
           "kind": "Responsive",
           "required": true,
-          "status": "Not executed",
-          "expected": "Map crop/marker/action visibility and location-details layout remain usable without horizontal scrolling at 375/768/1440 anchors, intermediate widths, and transition boundaries.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-004"
-          ]
+          "status": "Passed",
+          "expected": "Map/details remain usable at anchors, intermediate widths, and transition widths without overflow.",
+          "actual": "Chromium rendered 1440, 1276, 1073, 1072, 900, 768, 640, 631, 630, 480, and 375px with zero horizontal overflow after moving only the details-stack breakpoint to its measured 700px layout-failure threshold. The map keeps its source-backed 630px mobile transition; action and marker remain visible throughout.",
+          "command": "Chrome CDP viewport geometry, scrollWidth, action/marker visibility, and section-containment checks",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24 / Chrome",
+          "executedAt": "2026-08-16T05:06:50Z",
+          "evidence": [
+            "Run 31928114231 detected the 640/631 tablet-details overflow; fix commit 297abb67e3696de65af319b5d8a74efcf2024b49; successful rerun 31928156412 verified all 11 widths."
+          ],
+          "references": []
         },
         {
           "name": "Location visual fidelity",
           "kind": "Visual",
           "required": true,
-          "status": "Not executed",
-          "expected": "Location matches the approved 1440/768/375 map, details, navigation, and Gold footer compositions without inventing interactive-map behavior.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-004"
-          ]
+          "status": "Passed",
+          "expected": "Approved map/details/navigation/Gold Footer compositions match without invented map interaction.",
+          "actual": "1440 matched hero 1440x600, action x156/y16, marker x687/y256, details y600/h569 with title x165/y730/w350 and copy x735/y730/w540, Footer y1169/h244. 768 matched hero 768x600, action x39/y16, marker x351/y256, details y600/h411 with title x40/y680/w223 and copy x330/y680/w398, Footer y1011/h208. Exact 375 matched hero 375x550, action x10/y10, marker x154.5/y231, details y550/h533 with 16px/343px stacked content, Footer y1083. Correct desktop/tablet/mobile map sources were selected.",
+          "command": "Rendered Chrome geometry assertions against Figma Location 2148:2069, 2148:2196, and 2148:2218",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24 / Chrome",
+          "executedAt": "2026-08-16T05:06:50Z",
+          "evidence": [
+            "Successful Location verification run 31928156412."
+          ],
+          "references": []
         }
       ]
     },
