@@ -6,16 +6,20 @@
     "executionMode": "Gated"
   },
   "state": {
-    "stage": 5,
+    "stage": 6,
     "status": "Ready",
     "activeInputs": [
       "SRC-DS-001",
-      "SRC-REPO-001"
+      "SRC-REPO-002"
     ],
     "currentTask": null,
     "latestOutput": null,
     "latestValidationRuntime": null,
-    "architectureDecision": null
+    "architectureDecision": {
+      "result": "Required",
+      "reason": "The two-page Astro implementation has meaningful routing, shared presentation boundaries, asset and font delivery, responsive composition, accessibility ownership, and Vercel build/deployment decisions that should be explicit before planning.",
+      "recordedAt": "2026-08-16T00:32:00.000Z"
+    }
   },
   "snapshots": [
     {
@@ -29,9 +33,25 @@
       "id": "SRC-REPO-001",
       "role": "Input baseline",
       "pinStrength": "Immutable",
+      "status": "Superseded",
+      "reference": ".",
+      "commit": "fa000a21be23460757fdf09a4c9e49a677f695fb",
+      "supersededBy": "SRC-REPO-002"
+    },
+    {
+      "id": "SRC-REPO-002",
+      "role": "Input baseline",
+      "pinStrength": "Immutable",
       "status": "Active",
       "reference": ".",
-      "commit": "fa000a21be23460757fdf09a4c9e49a677f695fb"
+      "commit": "f28f02bb303a4f486e73e2ca1a326751e6c3fd02"
+    },
+    {
+      "id": "SRC-RUN-001",
+      "role": "Supporting source",
+      "pinStrength": "Time-bound",
+      "status": "Active",
+      "reference": "https://vercel.com/fer-falcons-team/art-gallery-website"
     }
   ],
   "verifications": [
@@ -106,6 +126,31 @@
       "method": "Pinned commit and frontend subtree comparison",
       "evidence": "Stage 5 compared the immutable SRC-REPO-001 frontend tree with current main and confirmed frontend/ remains unchanged; repository changes since baseline remain workflow/documentation-only.",
       "checkedAt": "2026-08-16T00:14:00.000Z"
+    },
+    {
+      "id": "VER-010",
+      "snapshot": "SRC-DS-001",
+      "result": "Unchanged",
+      "method": "Figma structure comparison",
+      "evidence": "Stage 6 re-inspected 🤖 Workflow (2148:2); the six approved Home/Location frames plus Hero, Gallery Content, Location Details, Map Hero, Footer, navigation, imagery, and style-guide resources remain materially unchanged.",
+      "checkedAt": "2026-08-16T00:32:00.000Z"
+    },
+    {
+      "id": "VER-011",
+      "snapshot": "SRC-REPO-001",
+      "result": "Unexpected upstream or concurrent change",
+      "method": "Pinned commit and current-main comparison",
+      "evidence": "After the approved Stage 5 checkpoint, main advanced to f28f02bb303a4f486e73e2ca1a326751e6c3fd02. The material frontend difference is approved PR #7 adding frontend/vercel.json with the Vercel ignored-build command; this affects deployment architecture and downstream planning but not approved Stages 1–5 product/design behavior.",
+      "checkedAt": "2026-08-16T00:32:00.000Z",
+      "replacement": "SRC-REPO-002"
+    },
+    {
+      "id": "VER-012",
+      "snapshot": "SRC-REPO-002",
+      "result": "Unchanged",
+      "method": "Current commit and repository-structure inspection",
+      "evidence": "Inspected current main at f28f02bb303a4f486e73e2ca1a326751e6c3fd02, including frontend package/runtime configuration, Astro starter structure, nested AGENTS.md, and frontend/vercel.json. This snapshot is the current repository input for Stage 6 and later planning.",
+      "checkedAt": "2026-08-16T00:32:00.000Z"
     }
   ],
   "artifacts": [
@@ -211,6 +256,20 @@
       ],
       "statusChangedAt": "2026-08-16T00:15:00.000Z",
       "statusEvidence": "Stage 5 documentation consistency review completed in two passes, required corrections applied, non-blocking assumptions documented, and explicitly approved by the project owner.",
+      "statusBy": "Fernando Falcon"
+    },
+    {
+      "id": "ART-ARCHITECTURE",
+      "type": "ARCHITECTURE",
+      "path": "ARCHITECTURE.md",
+      "status": "Approved",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-002",
+        "SRC-RUN-001"
+      ],
+      "statusChangedAt": "2026-08-16T02:31:00.000Z",
+      "statusEvidence": "Stage 6 architecture completed, reviewed in two passes, and explicitly approved by the project owner. The workflow intentionally remains at Stage 6 and does not enter Stage 7.",
       "statusBy": "Fernando Falcon"
     }
   ],
@@ -361,6 +420,35 @@
       ],
       "evidence": "Stage 5 documentation consistency review completed with both required review passes, owning-document corrections applied, no blocking contradictions, documented non-blocking assumptions, fresh source verification, and explicit project-owner approval. The workflow intentionally remains at Stage 5 and is not advanced.",
       "recordedAt": "2026-08-16T00:15:00.000Z",
+      "approvedBy": "Fernando Falcon"
+    },
+    {
+      "id": "GATE-007",
+      "stage": 6,
+      "status": "Active",
+      "result": "Passed with assumptions",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-002",
+        "SRC-RUN-001"
+      ],
+      "verifications": [
+        "VER-010",
+        "VER-012"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE",
+        "ART-DESIGN-AUDIT",
+        "ART-REQUIREMENTS",
+        "ART-DESIGN",
+        "ART-SPEC",
+        "ART-DOCUMENT-REVIEW",
+        "ART-ARCHITECTURE"
+      ],
+      "evidence": "Stage 6 architecture was required, completed, reviewed in two passes, and explicitly approved by the project owner. Non-blocking font-delivery and social-destination questions remain documented. Per owner instruction, the workflow intentionally remains at Stage 6 and Stage 7 is not started.",
+      "recordedAt": "2026-08-16T02:31:00.000Z",
       "approvedBy": "Fernando Falcon"
     }
   ],
