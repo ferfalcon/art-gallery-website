@@ -1,0 +1,60 @@
+name: Agent P01-T01 Start
+
+on:
+  push:
+    branches:
+      - agent/p01-t01-visual-foundation
+
+permissions:
+  contents: write
+
+jobs:
+  start-task:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out task branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Configure repository tools
+        run: |
+          corepack enable
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Read canonical workflow context
+        run: node docs/implementation-workflow/cli/design-workflow.mjs context --json
+
+      - name: Enter Stage 10 and start P01-T01
+        run: |
+          node docs/implementation-workflow/cli/design-workflow.mjs stage advance
+          node docs/implementation-workflow/cli/design-workflow.mjs task start P01-T01
+          node docs/implementation-workflow/cli/design-workflow.mjs sync
+          node docs/implementation-workflow/cli/design-workflow.mjs context --json
+
+      - name: Retrieve required modern web guidance
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx -y modern-web-guidance@latest search "Build a static Astro visual foundation with semantic HTML, global CSS custom properties, local fonts, visible focus styles, responsive source-controlled images, and no client hydration" --skill-version 2026_05_16-c5e78707 | tee /tmp/modern-web-guidance.json
+          IDS=$(node --input-type=module -e "import fs from 'node:fs'; const rows=JSON.parse(fs.readFileSync('/tmp/modern-web-guidance.json','utf8')); console.log(rows.slice(0,3).map((row)=>row.id).join(','));")
+          if [ -n "$IDS" ]; then
+            echo "Retrieving guidance: $IDS"
+            npx -y modern-web-guidance@latest retrieve "$IDS"
+          else
+            echo "Search returned no guidance IDs; listing available guides."
+            npx -y modern-web-guidance@latest list
+          fi
+
+      - name: Persist Stage 10 task state
+        run: |
+          git add .workflow
+          git commit -m "chore: enter Stage 10 for P01-T01"
+          git push origin HEAD:agent/p01-t01-visual-foundation
