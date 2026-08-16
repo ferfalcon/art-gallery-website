@@ -98,7 +98,6 @@ jobs:
               text-decoration: none;
               text-transform: uppercase;
             }
-
             .primary-action__label,
             .primary-action__icon {
               display: flex;
@@ -106,33 +105,27 @@ jobs:
               align-items: center;
               justify-content: center;
             }
-
             .primary-action__label {
               width: 12.75rem;
               padding: 1.5rem 2rem;
               background: var(--color-text-strong);
               white-space: nowrap;
             }
-
             .primary-action__icon {
               width: 3.5rem;
               flex: 0 0 3.5rem;
               background: var(--color-accent);
             }
-
             .primary-action__icon img {
               width: 0.625rem;
               height: 1.5rem;
             }
-
             .primary-action:hover .primary-action__label {
               background: var(--color-accent);
             }
-
             .primary-action:hover .primary-action__icon {
               background: var(--color-text-strong);
             }
-
             .primary-action:focus-visible {
               outline: 0.25rem solid var(--color-accent);
               outline-offset: 0.1875rem;
@@ -192,76 +185,63 @@ jobs:
               padding-block: 5rem;
               padding-inline: clamp(2.5rem, calc((100vw - 69.375rem) / 2), 10.3125rem);
             }
-
             .site-footer--dark {
               color: var(--color-surface);
               background: var(--color-text-strong);
             }
-
             .site-footer--gold {
               color: var(--color-text-strong);
               background: var(--color-accent);
             }
-
             .site-footer__content {
               display: flex;
               width: 45.625rem;
               align-items: flex-start;
               justify-content: space-between;
             }
-
             .site-footer__logo {
               width: 9.97325rem;
               height: 3.625rem;
             }
-
             .site-footer__copy {
               width: 26.875rem;
               font-size: var(--type-body-medium);
               line-height: 1.75rem;
             }
-
             .site-footer__social {
               display: flex;
               flex: 0 0 auto;
               align-items: center;
               gap: var(--space-250);
             }
-
             .site-footer__social img {
               width: 1.25rem;
               height: 1.25rem;
             }
-
             .site-footer__social .site-footer__twitter {
               height: 1.0158125rem;
             }
-
             @media (max-width: 62.5rem) {
               .site-footer {
                 min-height: 13rem;
                 padding-block: 3rem;
                 padding-inline: 2.5rem;
               }
-
               .site-footer__content {
                 width: 28.125rem;
                 justify-content: flex-start;
                 gap: 4rem;
               }
-
               .site-footer__logo {
                 width: 6.875rem;
                 height: 2.5rem;
               }
-
               .site-footer__copy {
                 width: auto;
                 flex: 1 1 auto;
                 line-height: 1.4;
               }
             }
-
             @media (max-width: 39.375rem) {
               .site-footer {
                 min-height: 0;
@@ -269,21 +249,17 @@ jobs:
                 gap: 2.5rem;
                 padding-block: 3rem;
               }
-
               .site-footer--dark {
                 padding-inline: 2.5rem;
               }
-
               .site-footer--gold {
                 padding-inline: 1rem;
               }
-
               .site-footer__content {
                 width: 100%;
                 flex-direction: column;
                 gap: 2.5rem;
               }
-
               .site-footer__copy {
                 width: 100%;
               }
@@ -294,12 +270,11 @@ jobs:
       - name: Compile shared components and validate final build
         run: |
           set -euo pipefail
-          mkdir -p frontend/src/pages/__validation
-          cat > frontend/src/pages/__validation/shared.astro <<'EOF'
+          cat > frontend/src/pages/validation-shared.astro <<'EOF'
           ---
-          import Layout from "../../layouts/Layout.astro";
-          import PrimaryAction from "../../components/PrimaryAction.astro";
-          import Footer from "../../components/Footer.astro";
+          import Layout from "../layouts/Layout.astro";
+          import PrimaryAction from "../components/PrimaryAction.astro";
+          import Footer from "../components/Footer.astro";
           ---
           <Layout title="Shared component validation">
             <main>
@@ -313,10 +288,10 @@ jobs:
           cd frontend
           pnpm install --frozen-lockfile
           pnpm build
-          test -f dist/__validation/shared/index.html
-          rm -rf src/pages/__validation
+          test -f dist/validation-shared/index.html
+          rm src/pages/validation-shared.astro
           pnpm build
-          test ! -e dist/__validation/shared/index.html
+          test ! -e dist/validation-shared/index.html
           cd ..
 
       - name: Run navigation, responsive, and visual assertions
@@ -328,7 +303,6 @@ jobs:
           const footer = fs.readFileSync('frontend/src/components/Footer.astro', 'utf8');
           const errors = [];
           const check = (ok, message) => { if (!ok) errors.push(message); };
-
           check(/<a[\s\S]*href=\{href\}/.test(action), 'PrimaryAction must be a native anchor with explicit href.');
           check(!/href\s*=\s*["']\/location\//.test(action) && !/href\s*=\s*["']\/["']/.test(action), 'PrimaryAction must not infer route destinations.');
           check(!/client:|onclick|on:click/.test(action), 'PrimaryAction must not use client JS navigation.');
@@ -337,7 +311,6 @@ jobs:
           check(action.includes('.primary-action:hover .primary-action__label') && action.includes('.primary-action:hover .primary-action__icon'), 'Hover exchange states are required.');
           check(action.includes('outline: 0.25rem solid var(--color-accent)') && action.includes('outline-offset: 0.1875rem'), 'Focus ring must match 4px gold / 3px offset source evidence.');
           check(action.includes('aria-hidden="true"') && action.includes('alt=""'), 'Arrow artwork must be decorative.');
-
           check(/<footer\b/.test(footer), 'Footer must use the footer landmark.');
           check(!/<a\b/.test(footer), 'Social artwork must remain non-interactive until destinations exist.');
           check(footer.includes('site-footer__social" aria-hidden="true"'), 'Social artwork must be removed from the accessibility tree.');
@@ -348,7 +321,6 @@ jobs:
           check(footer.includes('width: 45.625rem') && footer.includes('width: 28.125rem'), 'Desktop/tablet content widths must preserve 730px/450px source anchors.');
           check(footer.includes('gap: 4rem') && footer.includes('gap: 2.5rem'), 'Tablet 64px and mobile 40px content spacing must be represented.');
           check(!/client:|onclick|on:click/.test(footer), 'Footer must stay static with no hydration.');
-
           for (const file of ['arrow-left.svg','arrow-right.svg','facebook-black.svg','instagram-black.svg','twitter-black.svg']) {
             const p = `frontend/src/assets/brand/${file}`;
             check(fs.existsSync(p) && fs.statSync(p).size > 0, `Missing ${p}`);
@@ -390,7 +362,6 @@ jobs:
             ('- [ ] Source/output lineage and documentation are current.', '- [x] Source/output lineage and documentation are current.'),
             ('- [ ] No unapproved deviation/blocker remains.', '- [x] No unapproved deviation/blocker remains.')
           ]: t = t.replace(old,new)
-          t = t.replace('Pending Stage 10 implementation.', 'Implementation and required validation passed. Canonical completion/output identity is recorded by the workflow CLI.', 1)
           p.write_text(t)
           PY
           git rm .github/workflows/agent-p01-t02-implement.yml
