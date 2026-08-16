@@ -1,6 +1,6 @@
 ---
 artifact: DOCUMENT-REVIEW
-status: Ready for owner review
+status: Approved
 baseline:
   design:
     - SRC-DS-001
@@ -17,14 +17,15 @@ updated: 2026-08-15
 
 ## 1. Document Information
 
-- Status: Ready for owner review
+- Status: Approved
 - Review date: 2026-08-15
 - Reviewer: ChatGPT
 - Project: Art gallery website
 - Source baseline: `SOURCE-BASELINE.md`
 - Reviewed artifact versions or commits: approved Stage 0–4 artifacts on `main`, plus Stage 5 corrections on `workflow/stage-5-document-review`
 - Execution mode: Gated
-- Current canonical checkpoint before Stage 5 approval: Stage 4 — Ready, `GATE-005` Passed
+- Canonical checkpoint: Stage 5 — Ready, `GATE-006` Passed with assumptions
+- Owner approval: Fernando Falcon, 2026-08-15
 
 ## 2. Review Scope
 
@@ -205,9 +206,9 @@ When stage-time prose and the canonical workflow record differ only in lifecycle
 
 | Document | Change summary | Findings resolved | Validation performed |
 |---|---|---|---|
-| `WORKFLOW-STATE.md` | Replaced stale Stage 1 operational view with Stage 4 approved checkpoint, Stage 5 review status, source-integrity notes, and next gate boundary | `DOC-001`, `DOC-004` | Compared to canonical record, live Figma, and repository baseline/current frontend tree |
+| `WORKFLOW-STATE.md` | Replaced stale Stage 1 operational view with current approved checkpoint, Stage 5 review status, source-integrity notes, and next gate boundary | `DOC-001`, `DOC-004` | Compared to canonical record, live Figma, and repository baseline/current frontend tree |
 | `REQUIREMENTS.md` | Marked approved Stage 2 lifecycle/gate state, updated open-question dispositions, and populated downstream requirement→design→spec/AC traceability | `DOC-002` | Cross-checked against `DESIGN.md` and `SPEC.md` identifier tables |
-| `DOCUMENT-REVIEW.md` | Added Stage 5 two-pass review, findings, source verification, coverage, risks, and completion status | All | Second pass after corrections |
+| `DOCUMENT-REVIEW.md` | Added Stage 5 two-pass review, findings, source verification, coverage, risks, completion status, and owner approval | All | Second pass after corrections plus owner gate recording |
 
 ## 12. Remaining Risks
 
@@ -246,7 +247,7 @@ When stage-time prose and the canonical workflow record differ only in lifecycle
 
 `Ready with documented non-blocking assumptions`
 
-This status is selected instead of `Ready for architecture and planning` only because the Standard/Gated workflow still requires the explicit Stage 5 owner gate and the Stage 6 architecture decision. There is no documentation blocker preventing Stage 6 once Stage 5 is approved.
+This status reflects the non-blocking product/design/asset questions retained for downstream work. Stage 5 owner approval is recorded as `GATE-006` Passed with assumptions. The workflow remains at Stage 5 — Ready until explicitly advanced.
 
 ## 15. Completion Summary
 
@@ -256,5 +257,6 @@ This status is selected instead of `Ready for architecture and planning` only be
 - Important findings: stale human-readable workflow state; stale requirement downstream traceability; low-severity historical lifecycle prose mismatch
 - Assumptions introduced: none that expand product scope
 - Open questions or blockers: no Stage 5 blocker; social destinations, exact implementation thresholds/crops, asset delivery, and Stage 6 architecture decision remain intentionally downstream/non-blocking
-- Recommended next stage after owner approval: Stage 6 architecture decision, with a separate `ARCHITECTURE.md` created only if the Standard-profile decision determines it is necessary
-- Gated-mode boundary: do not record `GATE-006`, advance the canonical workflow checkpoint, or enter Stage 6 until explicit project-owner approval of this Stage 5 review
+- Stage 5 owner decision: approved; `GATE-006` Passed with assumptions
+- Recommended next stage if explicitly advanced: Stage 6 architecture decision, with a separate `ARCHITECTURE.md` created only if the Standard-profile decision determines it is necessary
+- Gated-mode boundary: Stage 6 has not been entered; do not advance or perform Stage 6 work without explicit project-owner instruction
