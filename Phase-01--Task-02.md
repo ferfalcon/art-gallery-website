@@ -1,7 +1,7 @@
 ---
 artifact: TASK
 id: P01-T02
-status: In progress
+status: Complete
 baseline:
   design: [SRC-DS-001]
   repository: [SRC-REPO-002]
@@ -20,7 +20,7 @@ Canonical task state, prerequisites, references, validation, and output lineage 
 
 ## 1. Status
 
-Stage 10 implementation is complete and validated; canonical completion is recorded through the workflow CLI.
+Complete. Shared navigation and Footer responsibilities are implemented and all required validation passed.
 
 ## 2. Objective
 
@@ -109,7 +109,7 @@ None. The task is implemented without owner-approved deviations.
 
 ## 17. Output Lineage
 
-Implementation and all four required validations passed; canonical output identity follows from `task complete`.
+Complete. Implementation output commit: `7997bc12db9db5089f5004f2d3f0e38ecb7d603a`; the canonical workflow record owns the generated output snapshot and validation lineage.
 
 ## 18. Definition of Done
 
