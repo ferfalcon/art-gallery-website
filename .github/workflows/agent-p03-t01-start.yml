@@ -1,0 +1,42 @@
+name: Agent P03-T01 Start
+on:
+  push:
+    branches: [agent/p01-t01-visual-foundation]
+permissions:
+  contents: write
+jobs:
+  start:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Activate integration task and retrieve frontend guidance
+        run: |
+          set -euo pipefail
+          corepack enable
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          CLI="node docs/implementation-workflow/cli/design-workflow.mjs"
+          $CLI context --json > /tmp/before.json
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const c=JSON.parse(fs.readFileSync('/tmp/before.json','utf8'));
+          if(c.stage?.number!==10) throw new Error(`Expected Stage 10, got ${c.stage?.number ?? 'none'}`);
+          if(c.tasks?.current) throw new Error(`Expected no current task, got ${c.tasks.current.id}`);
+          if(c.sources?.latestOutput!=='SRC-REPO-006') throw new Error(`Expected SRC-REPO-006, got ${c.sources?.latestOutput ?? 'none'}`);
+          NODE
+          $CLI task start P03-T01
+          $CLI sync
+          $CLI context --json
+          npx -y modern-web-guidance@latest search "Final static Astro two-route integration audit: native bidirectional links, keyboard focus, landmarks headings image semantics, responsive reflow and zoom, visual regression, remove only confirmed-unused starter files, no hydration or unnecessary JavaScript" --skill-version 2026_05_16-c5e78707 | tee /tmp/guidance.json
+          IDS=$(node --input-type=module -e "import fs from 'node:fs'; const rows=JSON.parse(fs.readFileSync('/tmp/guidance.json','utf8')); console.log(rows.slice(0,4).map((row)=>row.id).join(','));")
+          if [ -n "$IDS" ]; then npx -y modern-web-guidance@latest retrieve "$IDS"; fi
+          git rm .github/workflows/agent-p03-t01-start.yml
+          git add .workflow
+          git commit -m "chore: start P03-T01"
+          git push origin HEAD:agent/p01-t01-visual-foundation
