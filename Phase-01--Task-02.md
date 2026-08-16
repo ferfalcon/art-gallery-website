@@ -1,7 +1,7 @@
 ---
 artifact: TASK
 id: P01-T02
-status: Ready
+status: In progress
 baseline:
   design: [SRC-DS-001]
   repository: [SRC-REPO-002]
@@ -20,7 +20,7 @@ Canonical task state, prerequisites, references, validation, and output lineage 
 
 ## 1. Status
 
-Ready for Stage 10 only after explicit Stage 9 approval. Implementation has not started.
+Stage 10 implementation is complete and validated; canonical completion is recorded through the workflow CLI.
 
 ## 2. Objective
 
@@ -87,10 +87,10 @@ All checks remain `Not executed` until Stage 10.
 
 ## 13. Acceptance Criteria
 
-- [ ] `PLAN-002` objective and referenced Must behavior are implemented.
-- [ ] Explicit `/location/` and `/` href contracts are preserved.
-- [ ] Accessibility/responsive/visual checks pass.
-- [ ] Output snapshot lineage and discoveries/deviations are recorded.
+- [x] `PLAN-002` objective and referenced Must behavior are implemented.
+- [x] Explicit `/location/` and `/` href contracts are preserved.
+- [x] Accessibility/responsive/visual checks pass.
+- [x] Output snapshot lineage and discoveries/deviations are recorded.
 
 ## 14. Risks and Considerations
 
@@ -99,22 +99,24 @@ All checks remain `Not executed` until Stage 10.
 
 ## 15. Implementation Discoveries
 
-None during decomposition.
+- PrimaryAction keeps `href`, `label`, and direction explicit so route destinations are never inferred from visual variants.
+- Footer breakpoint selection is based on the 450px tablet content group plus 60px social group and required breathing room; it stacks at 630px while retaining the 375px Dark/Gold padding difference.
+- Social artwork stays purely visual and outside the tab/accessibility flow because no authoritative social destinations exist.
 
 ## 16. Deviations
 
-None during decomposition.
+None. The task is implemented without owner-approved deviations.
 
 ## 17. Output Lineage
 
-Pending Stage 10 implementation.
+Implementation and all four required validations passed; canonical output identity follows from `task complete`.
 
 ## 18. Definition of Done
 
-- [ ] Objective/acceptance criteria complete.
-- [ ] All required validation passes.
-- [ ] Source/output lineage and documentation are current.
-- [ ] No unapproved deviation/blocker remains.
+- [x] Objective/acceptance criteria complete.
+- [x] All required validation passes.
+- [x] Source/output lineage and documentation are current.
+- [x] No unapproved deviation/blocker remains.
 
 ## 19. Completion Report
 

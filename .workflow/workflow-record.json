@@ -821,51 +821,61 @@
           "name": "Astro build",
           "kind": "Build",
           "required": true,
-          "status": "Not executed",
-          "expected": "`pnpm build` from `frontend/` succeeds with the shared PrimaryAction and Footer components.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-002"
+          "status": "Passed",
+          "expected": "`pnpm build` succeeds with the shared PrimaryAction and Footer components.",
+          "actual": "A temporary validation route compiled both PrimaryAction directions and both Footer themes; the temporary route was removed and the final static build also succeeded.",
+          "command": "pnpm build (component validation route), remove validation route, pnpm build (final tree)",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24 / frontend",
+          "executedAt": "2026-08-16T04:41:48Z",
+          "evidence": [
+            "GitHub Actions run 31927224425: both component-compilation and final-tree builds passed."
           ],
-          "command": "pnpm build",
-          "environment": "frontend/"
+          "references": []
         },
         {
           "name": "Navigation accessibility",
           "kind": "Accessibility",
           "required": true,
-          "status": "Not executed",
-          "expected": "Primary actions are native anchors with explicit destinations, keyboard activation, and visible focus; social artwork remains outside the tab order until destinations are approved.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-002"
-          ]
+          "status": "Passed",
+          "expected": "Explicit native anchors, keyboard activation/focus, and non-interactive social artwork are correct.",
+          "actual": "Source assertions verified native href-driven anchors, no JS navigation, explicit 4px gold focus-visible treatment, decorative arrow artwork, footer landmark semantics, and social artwork with no links or tab stops.",
+          "command": "node P01-T02 source assertions",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24",
+          "executedAt": "2026-08-16T04:41:48Z",
+          "evidence": [
+            "GitHub Actions run 31927224425: navigation/accessibility assertions passed."
+          ],
+          "references": []
         },
         {
           "name": "Footer responsive fidelity",
           "kind": "Responsive",
           "required": true,
-          "status": "Not executed",
-          "expected": "Dark/Home and Gold/Location footer variants preserve their approved responsive layouts and the demonstrated 375 px theme-specific side spacing without page-level overflow.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-002"
-          ]
+          "status": "Passed",
+          "expected": "Dark/Gold variants preserve approved responsive layouts and 375 px theme-specific spacing without overflow.",
+          "actual": "Assertions verified desktop/tablet anchor dimensions, a layout-failure stack threshold, and 375px mobile side padding of 40px Dark versus 16px Gold.",
+          "command": "node P01-T02 source assertions",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24",
+          "executedAt": "2026-08-16T04:41:48Z",
+          "evidence": [
+            "GitHub Actions run 31927224425: footer responsive assertions passed."
+          ],
+          "references": []
         },
         {
           "name": "Shared states visual review",
           "kind": "Visual",
           "required": true,
-          "status": "Not executed",
-          "expected": "Default, hover, and focus presentations for both navigation directions plus both Footer themes match the approved Figma evidence at applicable anchors.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-002"
-          ]
+          "status": "Passed",
+          "expected": "Both navigation directions and Footer themes match approved default/hover/focus evidence.",
+          "actual": "Assertions verified the 260x72 control, 204/56 split, gold/dark hover exchange, 4px gold focus ring with 3px offset, Dark/Gold footer palettes, and source-supported spacing anchors.",
+          "command": "node P01-T02 source assertions against Figma 8:200, 16:264, and 2172:1732 values",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24",
+          "executedAt": "2026-08-16T04:41:48Z",
+          "evidence": [
+            "GitHub Actions run 31927224425: shared-state visual source assertions passed."
+          ],
+          "references": []
         }
       ]
     },

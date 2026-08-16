@@ -1,0 +1,81 @@
+---
+import arrowLeft from "../assets/brand/arrow-left.svg";
+import arrowRight from "../assets/brand/arrow-right.svg";
+
+interface Props {
+  href: string;
+  label: string;
+  direction: "forward" | "back";
+}
+
+const { href, label, direction } = Astro.props;
+
+if (!href || !label || !["forward", "back"].includes(direction)) {
+  throw new Error("PrimaryAction requires explicit href, label, and direction props.");
+}
+
+const arrow = direction === "back" ? arrowLeft : arrowRight;
+---
+
+<a class:list={["primary-action", `primary-action--${direction}`]} href={href}>
+  {direction === "back" && (
+    <span class="primary-action__icon" aria-hidden="true">
+      <img src={arrow.src} alt="" width="10" height="24" />
+    </span>
+  )}
+  <span class="primary-action__label">{label}</span>
+  {direction === "forward" && (
+    <span class="primary-action__icon" aria-hidden="true">
+      <img src={arrow.src} alt="" width="10" height="24" />
+    </span>
+  )}
+</a>
+
+<style>
+  .primary-action {
+    display: inline-flex;
+    width: 16.25rem;
+    height: 4.5rem;
+    color: var(--color-surface);
+    font-family: var(--font-display);
+    font-size: var(--type-action-label);
+    font-weight: var(--font-weight-display-extra-bold);
+    line-height: 1;
+    letter-spacing: var(--tracking-action);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .primary-action__label,
+  .primary-action__icon {
+    display: flex;
+    height: 4.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .primary-action__label {
+    width: 12.75rem;
+    padding: 1.5rem 2rem;
+    background: var(--color-text-strong);
+    white-space: nowrap;
+  }
+  .primary-action__icon {
+    width: 3.5rem;
+    flex: 0 0 3.5rem;
+    background: var(--color-accent);
+  }
+  .primary-action__icon img {
+    width: 0.625rem;
+    height: 1.5rem;
+  }
+  .primary-action:hover .primary-action__label {
+    background: var(--color-accent);
+  }
+  .primary-action:hover .primary-action__icon {
+    background: var(--color-text-strong);
+  }
+  .primary-action:focus-visible {
+    outline: 0.25rem solid var(--color-accent);
+    outline-offset: 0.1875rem;
+    box-shadow: none;
+  }
+</style>
