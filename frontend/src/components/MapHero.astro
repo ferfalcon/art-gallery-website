@@ -6,7 +6,7 @@ import mapMobile from "../assets/map/mobile.jpg";
 import locationMarker from "../assets/brand/location-marker.svg";
 ---
 
-<section class="map-hero" aria-label="Gallery map" data-map-hero>
+<div class="map-hero" data-map-hero>
   <picture class="map-hero__artwork" aria-hidden="true">
     <source media="(max-width: 39.375rem)" srcset={mapMobile.src} />
     <source media="(max-width: 67rem)" srcset={mapTablet.src} />
@@ -33,7 +33,7 @@ import locationMarker from "../assets/brand/location-marker.svg";
     height="88"
     data-location-marker
   />
-</section>
+</div>
 
 <style>
   .map-hero {
