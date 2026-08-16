@@ -1,0 +1,93 @@
+---
+import PrimaryAction from "./PrimaryAction.astro";
+import mapDesktop from "../assets/map/desktop.jpg";
+import mapTablet from "../assets/map/tablet.jpg";
+import mapMobile from "../assets/map/mobile.jpg";
+import locationMarker from "../assets/brand/location-marker.svg";
+---
+
+<section class="map-hero" aria-label="Gallery map" data-map-hero>
+  <picture class="map-hero__artwork" aria-hidden="true">
+    <source media="(max-width: 39.375rem)" srcset={mapMobile.src} />
+    <source media="(max-width: 67rem)" srcset={mapTablet.src} />
+    <img
+      src={mapDesktop.src}
+      alt=""
+      width={mapDesktop.width}
+      height={mapDesktop.height}
+      fetchpriority="high"
+      decoding="async"
+    />
+  </picture>
+
+  <div class="map-hero__action" data-location-action>
+    <PrimaryAction href="/" label="Back to Home" direction="back" />
+  </div>
+
+  <img
+    class="map-hero__marker"
+    src={locationMarker.src}
+    alt=""
+    aria-hidden="true"
+    width="66"
+    height="88"
+    data-location-marker
+  />
+</section>
+
+<style>
+  .map-hero {
+    position: relative;
+    inline-size: 100%;
+    block-size: 37.5rem;
+    background: var(--color-text-body);
+  }
+
+  .map-hero__artwork,
+  .map-hero__artwork img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .map-hero__artwork img {
+    object-fit: cover;
+  }
+
+  .map-hero__action {
+    position: absolute;
+    z-index: 2;
+    inset-block-start: 1rem;
+    inset-inline-start: 10.8333%;
+  }
+
+  .map-hero__marker {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 16rem;
+    inset-inline-start: calc(50% - 2.0625rem);
+    inline-size: 4.125rem;
+    block-size: 5.5rem;
+  }
+
+  @media (max-width: 67rem) {
+    .map-hero__action {
+      inset-inline-start: 5.078125%;
+    }
+  }
+
+  @media (max-width: 39.375rem) {
+    .map-hero {
+      block-size: 34.375rem;
+    }
+
+    .map-hero__action {
+      inset-block-start: 0.625rem;
+      inset-inline-start: 0.625rem;
+    }
+
+    .map-hero__marker {
+      inset-block-start: 14.4375rem;
+    }
+  }
+</style>
