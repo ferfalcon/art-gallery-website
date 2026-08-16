@@ -51,7 +51,7 @@ import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
 <style>
   .gallery-content {
     display: flex;
-    inline-size: min(calc(100% - 2rem), 69.375rem);
+    inline-size: min(calc(100% - 32px), 1110px);
     flex-direction: column;
     gap: var(--space-400);
   }
@@ -65,7 +65,7 @@ import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
   }
 
   .gallery-content__day {
-    grid-template-columns: minmax(0, 21.875rem) minmax(0, 39.6875rem);
+    grid-template-columns: minmax(0, 350px) minmax(0, 635px);
   }
 
   .gallery-content__day-copy {
@@ -73,15 +73,19 @@ import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
     min-inline-size: 0;
     flex-direction: column;
     gap: var(--space-400);
+    overflow-wrap: anywhere;
   }
 
   .gallery-content h2 {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
     font-size: var(--type-section-large);
     line-height: var(--leading-display);
     text-transform: uppercase;
   }
 
   .gallery-content p {
+    overflow-wrap: anywhere;
     font-size: var(--type-body-large);
     line-height: var(--leading-body);
   }
@@ -98,22 +102,22 @@ import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
   }
 
   .gallery-content__day-image {
-    inline-size: 39.6875rem;
-    block-size: 25rem;
+    inline-size: 635px;
+    block-size: 400px;
   }
 
   .gallery-content__inspiration {
-    grid-template-columns: minmax(0, 39.6875rem) minmax(0, 27.8125rem);
+    grid-template-columns: minmax(0, 635px) minmax(0, 445px);
   }
 
   .gallery-content__tall-image {
-    inline-size: 39.6875rem;
-    block-size: 45rem;
+    inline-size: 635px;
+    block-size: 720px;
   }
 
   .gallery-content__inspiration-column {
     display: flex;
-    inline-size: 27.8125rem;
+    inline-size: 445px;
     min-inline-size: 0;
     flex-direction: column;
     gap: var(--space-400);
@@ -121,17 +125,19 @@ import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
 
   .gallery-content__inspiration-image {
     inline-size: 100%;
-    block-size: 19.5625rem;
+    block-size: 313px;
   }
 
   .gallery-content__inspiration-copy {
     display: flex;
     inline-size: 100%;
-    block-size: 23.5625rem;
+    min-inline-size: 0;
+    min-block-size: 377px;
     flex-direction: column;
     justify-content: center;
     gap: var(--space-400);
     padding: var(--space-800) var(--space-600);
+    overflow-wrap: anywhere;
     color: var(--color-surface);
     background: var(--color-text-strong);
   }
@@ -142,7 +148,7 @@ import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
 
   @media (max-width: 67rem) {
     .gallery-content {
-      inline-size: min(89.7135%, 62.5rem);
+      inline-size: min(89.7135%, 1000px);
       gap: var(--space-150);
     }
 
@@ -165,7 +171,7 @@ import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
 
     .gallery-content__day-image {
       inline-size: 100%;
-      block-size: 25rem;
+      block-size: 400px;
     }
 
     .gallery-content__inspiration {
@@ -174,7 +180,7 @@ import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
 
     .gallery-content__tall-image {
       inline-size: 100%;
-      block-size: 45rem;
+      block-size: 720px;
     }
 
     .gallery-content__inspiration-column {
@@ -183,11 +189,11 @@ import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
     }
 
     .gallery-content__inspiration-image {
-      block-size: 19.5625rem;
+      block-size: 313px;
     }
 
     .gallery-content__inspiration-copy {
-      block-size: 24.75rem;
+      min-block-size: 396px;
       gap: var(--space-300);
       padding: var(--space-1000) var(--space-400);
     }
@@ -195,7 +201,7 @@ import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
 
   @media (max-width: 39.375rem) {
     .gallery-content {
-      inline-size: calc(100% - 2rem);
+      inline-size: calc(100% - 32px);
       gap: var(--space-400);
     }
 
@@ -239,7 +245,7 @@ import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
     }
 
     .gallery-content__inspiration-copy {
-      block-size: auto;
+      min-block-size: 0;
       gap: var(--space-300);
       padding: var(--space-600) var(--space-300);
     }
