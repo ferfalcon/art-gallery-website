@@ -11,7 +11,7 @@ updated: 2026-08-15
 
 ## 1. Document information
 
-- Lifecycle state: Draft; canonical lifecycle is owned by `.workflow/workflow-record.json`.
+- Lifecycle state: Approved; canonical lifecycle is owned by `.workflow/workflow-record.json`.
 - Version: 0.1
 - Last updated: 2026-08-15
 - Owner: ChatGPT
@@ -74,7 +74,7 @@ The implementation must reproduce the approved content and visual intent in the 
 - **Description:** The product must provide a Home page containing the approved gallery hero/title, introductory copy, `OUR LOCATION` primary action, `Your Day at the Gallery` content, `COME & BE INSPIRED` content, associated gallery imagery, and Home footer content.
 - **Rationale:** These items form the complete Home information hierarchy in the approved source.
 - **Evidence:** `EVD-001`–`EVD-003`, `EVD-007`, `EVD-009`–`EVD-011`.
-- **Acceptance ownership:** Stage 4 `SPEC.md` will define observable `AC-*` checks; the implementation must preserve all required content and hierarchy across supported responsive conditions.
+- **Acceptance ownership:** Stage 4 `SPEC.md` defines observable `AC-*` checks; the implementation must preserve all required content and hierarchy across supported responsive conditions.
 
 ### REQ-FR-002 — Present the Location experience
 
@@ -83,7 +83,7 @@ The implementation must reproduce the approved content and visual intent in the 
 - **Description:** The product must provide a Location page containing the approved map artwork and marker, `BACK TO HOME` action, `OUR LOCATION` heading, `99 King Street` address heading, Newport / Rhode Island / United States address copy, gallery location/opening-hours description, and Location footer content.
 - **Rationale:** These items form the complete Location information hierarchy in the approved source.
 - **Evidence:** `EVD-004`–`EVD-006`, `EVD-008`, `EVD-012`–`EVD-014`.
-- **Acceptance ownership:** Stage 4 `SPEC.md` will define observable `AC-*` checks for presence and content preservation.
+- **Acceptance ownership:** Stage 4 `SPEC.md` defines observable `AC-*` checks for presence and content preservation.
 
 ### REQ-FR-003 — Navigate from Home to Location
 
@@ -92,7 +92,7 @@ The implementation must reproduce the approved content and visual intent in the 
 - **Description:** Activating the `OUR LOCATION` primary action must take the user from Home to the Location experience.
 - **Rationale:** Bidirectional page navigation is an explicit prototype behavior.
 - **Evidence:** `EVD-046`; navigation component evidence `EVD-034`.
-- **Acceptance ownership:** Stage 4 will define route-observable behavior without assuming a route implementation in this document.
+- **Acceptance ownership:** Stage 4 defines route-observable behavior without assuming a route implementation in this document.
 
 ### REQ-FR-004 — Navigate from Location to Home
 
@@ -101,7 +101,7 @@ The implementation must reproduce the approved content and visual intent in the 
 - **Description:** Activating the `BACK TO HOME` action must take the user from Location back to the Home experience.
 - **Rationale:** The return path is explicit in the approved prototype.
 - **Evidence:** `EVD-047`; navigation component evidence `EVD-035`.
-- **Acceptance ownership:** Stage 4 will define route-observable behavior without assuming a route implementation in this document.
+- **Acceptance ownership:** Stage 4 defines route-observable behavior without assuming a route implementation in this document.
 
 ### REQ-FR-005 — Present the shared gallery footer identity
 
@@ -110,16 +110,16 @@ The implementation must reproduce the approved content and visual intent in the 
 - **Description:** Both pages must present the approved gallery logo, footer descriptive copy, and Facebook, Instagram, and Twitter icon artwork, using the page-appropriate footer theme demonstrated by the source.
 - **Rationale:** The footer is a repeated identity/content pattern across Home and Location.
 - **Evidence:** `EVD-007`, `EVD-008`, `EVD-019`, `EVD-037`, `EVD-051`–`EVD-054`.
-- **Acceptance ownership:** Stage 4 will define observable content/theme behavior. This requirement does not assert destination URLs or that the icons are links because those behaviors are not demonstrated.
+- **Acceptance ownership:** Stage 4 defines observable content/theme behavior. This requirement does not assert destination URLs or that the icons are links because those behaviors are not demonstrated.
 
 ### REQ-FR-006 — Preserve the responsive experience
 
-- **Classification:** Confirmed outcome; transition behavior requires later definition
+- **Classification:** Confirmed outcome; transition behavior defined downstream
 - **Priority:** Must
 - **Description:** Home and Location must preserve their complete content and intended hierarchy across narrow, medium, and wide layout conditions, without primary content being clipped, overlapped, or requiring horizontal page scrolling because of the page layout.
 - **Rationale:** The source provides distinct desktop, tablet, and mobile compositions, while `AUD-001` establishes that the supplied widths are evidence anchors rather than proven implementation breakpoints.
 - **Evidence:** `EVD-009`–`EVD-019`, `AUD-001`.
-- **Acceptance ownership:** Stage 3 will define responsive intent and Stage 4 will define testable behavior and conditions.
+- **Acceptance ownership:** Stage 3 defines responsive intent and Stage 4 defines testable behavior and conditions.
 
 ### REQ-FR-007 — Preserve source imagery and map-artwork intent
 
@@ -128,7 +128,7 @@ The implementation must reproduce the approved content and visual intent in the 
 - **Description:** The implementation must use the approved gallery imagery, logo/vector assets, map artwork, and marker in the roles demonstrated by the source, preserving the intended subject/crop emphasis across responsive conditions.
 - **Rationale:** Imagery is a material part of the approved composition, and the map crop changes structurally between supplied viewports.
 - **Evidence:** `EVD-044`, `EVD-045`, `EVD-051`–`EVD-058`, `AUD-006`.
-- **Acceptance ownership:** Stage 3 will define visual/crop intent; Stage 4 and implementation validation will define observable checks.
+- **Acceptance ownership:** Stage 3 defines visual/crop intent; Stage 4 and implementation validation define observable checks.
 
 ## 6. Business rules
 
@@ -157,7 +157,7 @@ No rule for opening hours logic, visitor eligibility, commerce, bookings, geogra
 - **Description:** The implemented pages must expose a semantic structure and reading order that follows the visible information hierarchy of Home and Location, including meaningful page/section headings and page landmarks where applicable.
 - **Rationale:** Figma demonstrates visual hierarchy but cannot establish DOM semantics or screen-reader reading order.
 - **Evidence or authority:** Project quality baseline; `EVD-007`, `EVD-008`, `EVD-059`.
-- **Acceptance ownership:** Stage 3/4 must translate this into explicit semantic and observable behavior.
+- **Acceptance ownership:** Stage 3/4 translate this into explicit semantic and observable behavior.
 
 ### REQ-AR-002 — Make interactive controls keyboard operable
 
@@ -166,7 +166,7 @@ No rule for opening hours logic, visitor eligibility, commerce, bookings, geogra
 - **Description:** Every implemented interactive control must be reachable and operable by keyboard in a logical order. This includes `OUR LOCATION`, `BACK TO HOME`, and any social item that is implemented as an interactive destination.
 - **Rationale:** The design supplies focus visuals for primary actions but does not prove keyboard behavior; social interaction is underspecified.
 - **Evidence or authority:** Project quality baseline; `EVD-049`, `EVD-059`, `AUD-002`, `AUD-003`.
-- **Acceptance ownership:** Stage 4 will define keyboard-observable checks.
+- **Acceptance ownership:** Stage 4 defines keyboard-observable checks.
 
 ### REQ-AR-003 — Provide clearly visible focus indication
 
@@ -184,7 +184,7 @@ No rule for opening hours logic, visitor eligibility, commerce, bookings, geogra
 - **Description:** Interactive controls must expose programmatic accessible names that communicate their purpose. Icon-only social controls, if interactive, must have meaningful accessible names. Images must receive text alternatives when they convey content and be excluded from assistive technology when they are purely decorative.
 - **Rationale:** The design source cannot define accessible names or image semantics.
 - **Evidence or authority:** Project quality baseline; `EVD-051`–`EVD-059`, `AUD-003`.
-- **Acceptance ownership:** Stage 3/4 will classify individual assets and controls.
+- **Acceptance ownership:** Stage 3/4 classify individual assets and controls.
 
 ### REQ-AR-005 — Preserve accessible reflow and reading order
 
@@ -202,7 +202,7 @@ No rule for opening hours logic, visitor eligibility, commerce, bookings, geogra
 - **Description:** If the implementation reproduces or adds non-essential animated transitions, it should respect the user's reduced-motion preference while preserving state clarity and operability.
 - **Rationale:** The source demonstrates a 0.2-second dissolve for CTA hover, while the project quality baseline explicitly calls for reduced-motion consideration.
 - **Evidence or authority:** Project quality baseline; `EVD-048`.
-- **Acceptance ownership:** Stage 3/4 will determine whether motion is implemented and how it degrades.
+- **Acceptance ownership:** Stage 3/4 determine whether motion is implemented and how it degrades.
 
 ## 9. Other non-functional requirements
 
@@ -221,7 +221,7 @@ No rule for opening hours logic, visitor eligibility, commerce, bookings, geogra
 - **Priority:** Must
 - **Category:** Responsive quality
 - **Description:** The layout must remain coherent between and around the supplied Figma viewport anchors, without introducing avoidable overlap, clipping, unreadable text, or broken interaction merely because the viewport does not equal 375, 768, or 1440 pixels.
-- **Measurement conditions:** Stage 3/4 must select validation widths from observed layout transformation needs and failure points rather than treating the three source widths as automatic implementation breakpoints.
+- **Measurement conditions:** Stage 3/4 select validation widths from observed layout transformation needs and failure points rather than treating the three source widths as automatic implementation breakpoints.
 - **Evidence:** `AUD-001`, `EVD-015`–`EVD-019`.
 
 No browser matrix, performance budget, uptime target, or numeric performance threshold is approved at Stage 2.
@@ -242,7 +242,7 @@ The following outcome-level expectations refine `REQ-FR-006`, `REQ-AR-005`, and 
 - Preserve Location Details as side-by-side at supplied desktop/tablet states and stacked at the supplied mobile state (`EVD-017`).
 - Preserve the responsive map marker/action positioning and the distinct supplied map crops (`EVD-018`, `AUD-006`).
 - Preserve horizontal desktop/tablet footers and vertical mobile footers (`EVD-019`).
-- Do not silently normalize the observed Dark-mobile 40 px versus Gold-mobile 16 px side-padding difference; Stage 3 must preserve or explicitly resolve it (`AUD-005`).
+- Do not silently normalize the observed Dark-mobile 40 px versus Gold-mobile 16 px side-padding difference; Stage 3 preserves the demonstrated distinction unless later evidence authorizes normalization (`AUD-005`).
 - Preserve approved source copy as the initial implementation content. Long-copy, localization, missing-image, and alternate-content behavior is not defined by the design evidence (`AUD-007`).
 
 ## 12. Constraints
@@ -291,8 +291,8 @@ The following outcome-level expectations refine `REQ-FR-006`, `REQ-AR-005`, and 
 
 | Dependency | Snapshot or evidence | Purpose | Availability | Risk |
 |---|---|---|---|---|
-| Approved Figma `🤖 Workflow` page | `SRC-DS-001`, `VER-003` | Visual/content/component/interaction evidence | Available; time-bound source reverified at Stage 2 entry | Mutable design URL requires continued verification before material downstream work |
-| Existing Astro frontend repository | `SRC-REPO-001` | Implementation target and tooling constraints | Available as immutable input snapshot | Current working branch has workflow outputs beyond the pinned input; planning must distinguish baseline from workflow changes |
+| Approved Figma `🤖 Workflow` page | `SRC-DS-001`, `VER-003` | Visual/content/component/interaction evidence | Available; time-bound source reverified at Stage 2 entry and again downstream | Mutable design URL requires continued verification before material downstream work |
+| Existing Astro frontend repository | `SRC-REPO-001` | Implementation target and tooling constraints | Available as immutable input snapshot | Current workflow outputs are newer than the pinned input; planning must distinguish source baseline from workflow documentation |
 | Figma image/vector resources | `EVD-051`–`EVD-058` | Logo, social artwork, gallery imagery, map artwork, marker | Available in Figma | Export format/licensing metadata not established in the design source |
 | Project operating contract | Root `AGENTS.md`, `PROJECT-CONTEXT.md` | Accessibility, source-fidelity, Git/deployment, scope constraints | Available | Must remain synchronized with actual repository policy |
 
@@ -308,31 +308,31 @@ These assumptions do not create new product behavior; they preserve the explicit
 
 ### Blocking questions
 
-None at Stage 2.
+None.
 
-### Non-blocking questions
+### Non-blocking questions and downstream dispositions
 
-1. **OQ-001 — Social destinations:** What URLs, if any, should the Facebook, Instagram, and Twitter items use? `AUD-003` confirms the source does not demonstrate destinations.
-2. **OQ-002 — Responsive transition points:** At which content/layout failure points should the supplied desktop/tablet/mobile compositions transform? `AUD-001` leaves exact transition points for Stage 3/4.
-3. **OQ-003 — Continuous map crop:** How should the map artwork interpolate between the supplied crops at intermediate widths? `AUD-006` requires Stage 3/4 resolution.
-4. **OQ-004 — Mobile footer side padding:** Is the Dark 40 px versus Gold 16 px mobile footer padding difference intentional? `AUD-005` requires preserving the distinction unless later evidence authorizes normalization.
-5. **OQ-005 — Asset export/licensing:** Which implementation/export formats should be used for Figma image/vector assets, and is any licensing metadata needed outside the design file? The audit found no licensing metadata.
-6. **OQ-006 — Content-edge behavior:** Are localization, unusually long copy, missing images, or alternate content within project scope? `AUD-007` provides no source evidence; no such feature is required unless scope changes.
+1. **OQ-001 — Social destinations:** What URLs, if any, should the Facebook, Instagram, and Twitter items use? `AUD-003` confirms the source does not demonstrate destinations. Stage 4 safely constrains the current scope by keeping the marks non-interactive until authoritative destinations are supplied.
+2. **OQ-002 — Responsive transition points:** Exact CSS thresholds remain an implementation/planning detail. Stage 3/4 resolve the behavioral rule: transform before layout failure rather than at arbitrary Figma-anchor widths.
+3. **OQ-003 — Continuous map crop:** Exact interpolation remains an implementation detail. Stage 3/4 require conservative adaptation that preserves marker/action visibility and source crop intent rather than inventing a continuous formula.
+4. **OQ-004 — Mobile footer side padding:** The intent behind the Dark 40 px versus Gold 16 px difference is unresolved; Stage 3/4 preserve the demonstrated output unless later evidence authorizes normalization.
+5. **OQ-005 — Asset export/licensing:** Implementation/export formats and any licensing metadata remain planning concerns before affected implementation tasks.
+6. **OQ-006 — Content-edge behavior:** Localization, unusually long copy, missing images, and alternate content remain outside current scope unless authoritative scope changes.
 
 ## 15. Risks
 
 | Risk | Impact | Likelihood | Mitigation | Blocking |
 |---|---|---|---|---|
-| Treating 375/768/1440 as arbitrary implementation breakpoints | Intermediate layouts may fail despite matching source anchors | Medium | Derive Stage 3/4 transitions from design evidence and layout failure rather than width labels alone | No |
-| Inventing social destinations or interaction behavior | Incorrect product behavior and accessibility semantics | Medium | Keep icons' destinations unresolved until authoritative input exists | No |
-| Losing map subject/crop intent between viewports | Location page can materially diverge from approved design | Medium | Define crop behavior in Stage 3 and validate representative intermediate widths | No |
+| Treating 375/768/1440 as arbitrary implementation breakpoints | Intermediate layouts may fail despite matching source anchors | Medium | Use approved layout-failure rules and validate immediately around chosen transitions | No |
+| Inventing social destinations or interaction behavior | Incorrect product behavior and accessibility semantics | Medium | Keep marks non-interactive until authoritative destinations exist | No |
+| Losing map subject/crop intent between viewports | Location page can materially diverge from approved design | Medium | Preserve source crop/subject relationships and validate representative intermediate widths | No |
 | Normalizing page-specific mobile footer spacing | Unapproved visual divergence | Medium | Preserve the observed difference until explicitly resolved | No |
 | Asset/export or licensing uncertainty discovered late | Implementation rework or release delay | Low/Unknown | Resolve export formats/licensing during planning before affected implementation tasks | No |
-| Figma source changes after this time-bound verification | Downstream documents may use stale design evidence | Medium | Reverify `SRC-DS-001` before each material downstream stage as required by workflow rules | No |
+| Figma source changes after time-bound verification | Downstream documents may use stale design evidence | Medium | Reverify `SRC-DS-001` before material downstream work as required by workflow rules | No |
 
 ## 16. Definition of Done
 
-Stage 2 requirements are ready for owner review when:
+Stage 2 requirements are complete:
 
 - [x] Goals, non-goals, users, functional needs, data expectations, accessibility, quality, constraints, dependencies, risks, assumptions, and questions are covered for the current scope.
 - [x] Every material requirement is specific, prioritized, and traceable to approved evidence or project authority.
@@ -340,37 +340,37 @@ Stage 2 requirements are ready for owner review when:
 - [x] Unsupported business rules, route implementation, breakpoints, social URLs, browser targets, security policy, persistence, and performance thresholds have not been invented.
 - [x] Responsive requirements define outcomes rather than arbitrary breakpoint numbers.
 - [x] Accessibility is represented as a first-class product quality requirement.
-- [x] Both required document-review passes have been completed.
-- [ ] The project owner has reviewed and approved `ART-REQUIREMENTS`.
-- [ ] `GATE-003` has been recorded as a passing Stage 2 gate.
+- [x] Both required document-review passes were completed.
+- [x] The project owner reviewed and approved `ART-REQUIREMENTS`.
+- [x] `GATE-003` is recorded as the passing Stage 2 gate in the canonical workflow record.
 
-Project implementation Definition of Done remains downstream: later `DESIGN.md`, `SPEC.md`, planning/tasks, implementation validation, and final review must demonstrate satisfaction of the approved requirements.
+Project implementation Definition of Done remains downstream: implementation validation and final review must demonstrate satisfaction of the approved requirements and acceptance criteria.
 
 ## 17. Traceability
 
 | Requirement | Snapshot or evidence | Stage 3 design intent | Stage 4 specification / acceptance | Validation |
 |---|---|---|---|---|
-| `REQ-FR-001` | `EVD-001`–`EVD-003`, `EVD-007`, `EVD-009`–`EVD-011` | Pending | Pending | Pending |
-| `REQ-FR-002` | `EVD-004`–`EVD-006`, `EVD-008`, `EVD-012`–`EVD-014` | Pending | Pending | Pending |
-| `REQ-FR-003` | `EVD-034`, `EVD-046` | Pending | Pending | Pending |
-| `REQ-FR-004` | `EVD-035`, `EVD-047` | Pending | Pending | Pending |
-| `REQ-FR-005` | `EVD-007`, `EVD-008`, `EVD-019`, `EVD-037`, `EVD-051`–`EVD-054` | Pending | Pending | Pending |
-| `REQ-FR-006` | `EVD-009`–`EVD-019`, `AUD-001` | Pending | Pending | Pending |
-| `REQ-FR-007` | `EVD-044`, `EVD-045`, `EVD-051`–`EVD-058`, `AUD-006` | Pending | Pending | Pending |
-| `REQ-DR-001` | `EVD-007`, `EVD-008`, `EVD-050`–`EVD-058` | Pending | Pending | Pending |
-| `REQ-AR-001` | Project quality baseline, `EVD-007`, `EVD-008`, `EVD-059` | Pending | Pending | Pending |
-| `REQ-AR-002` | Project quality baseline, `EVD-049`, `EVD-059`, `AUD-002`, `AUD-003` | Pending | Pending | Pending |
-| `REQ-AR-003` | `EVD-049`, `EVD-059`, `AUD-002`, `AUD-003` | Pending | Pending | Pending |
-| `REQ-AR-004` | Project quality baseline, `EVD-051`–`EVD-059`, `AUD-003` | Pending | Pending | Pending |
-| `REQ-AR-005` | Project quality baseline, `EVD-015`–`EVD-019`, `AUD-001` | Pending | Pending | Pending |
-| `REQ-AR-006` | Project quality baseline, `EVD-048` | Pending | Pending | Pending |
-| `REQ-NFR-001` | Project quality baseline, `EVD-009`–`EVD-045` | Pending | Pending | Pending |
-| `REQ-NFR-002` | `AUD-001`, `EVD-015`–`EVD-019` | Pending | Pending | Pending |
-| `REQ-CON-001` | `SRC-REPO-001`, `PROJECT-CONTEXT.md`, root `AGENTS.md` | N/A | Pending constraints | Pending |
-| `REQ-CON-002` | `SRC-REPO-001`, `PROJECT-CONTEXT.md`, root `AGENTS.md` | N/A | Pending constraints | Pending |
-| `REQ-CON-003` | Root `AGENTS.md`, `PROJECT-CONTEXT.md` | N/A | Pending constraints | Pending |
-| `REQ-CON-004` | Root `AGENTS.md`, project instructions | N/A | Pending constraints | Pending |
-| `REQ-CON-005` | `PROJECT-CONTEXT.md`, `DESIGN-AUDIT.md`, Stage 2 rules | N/A | Pending constraints | Pending |
+| `REQ-FR-001` | `EVD-001`–`EVD-003`, `EVD-007`, `EVD-009`–`EVD-011` | `DES-001`, `DES-002`, `DES-005`, `DES-006` | `SPEC-BEH-001`; `AC-001`, `AC-002`, `AC-010`, `AC-011`, `AC-015` | Implementation stage |
+| `REQ-FR-002` | `EVD-004`–`EVD-006`, `EVD-008`, `EVD-012`–`EVD-014` | `DES-003`–`DES-006` | `SPEC-BEH-002`; `AC-003`, `AC-004`, `AC-009`–`AC-011`, `AC-015` | Implementation stage |
+| `REQ-FR-003` | `EVD-034`, `EVD-046` | `DES-INT-001` | `SPEC-INT-001`; `AC-005`, `AC-007`, `AC-008` | Implementation stage |
+| `REQ-FR-004` | `EVD-035`, `EVD-047` | `DES-INT-002` | `SPEC-INT-002`; `AC-006`, `AC-007`, `AC-008` | Implementation stage |
+| `REQ-FR-005` | `EVD-007`, `EVD-008`, `EVD-019`, `EVD-037`, `EVD-051`–`EVD-054` | `DES-004`, `DES-007`, `DES-INT-003`, `DES-RWD-005` | `SPEC-BEH-004`, `SPEC-INT-003`; `AC-010`, `AC-013` | Implementation stage |
+| `REQ-FR-006` | `EVD-009`–`EVD-019`, `AUD-001` | `DES-RWD-001`–`DES-RWD-006` | `SPEC-BEH-006`, `SPEC-VAL-001`; `AC-002`, `AC-004`, `AC-011`, `AC-012`, `AC-016` | Implementation stage |
+| `REQ-FR-007` | `EVD-044`, `EVD-045`, `EVD-051`–`EVD-058`, `AUD-006` | `DES-002`, `DES-003`, `DES-RWD-004` | `SPEC-BEH-003`, `SPEC-BEH-005`, `SPEC-DATA-001`; `AC-001`, `AC-003`, `AC-009`, `AC-011`, `AC-014` | Implementation stage |
+| `REQ-DR-001` | `EVD-007`, `EVD-008`, `EVD-050`–`EVD-058` | `DES-002`, `DES-003`, `DES-006` | `SPEC-DATA-001`; `AC-001`, `AC-003`, `AC-014` | Implementation stage |
+| `REQ-AR-001` | Project quality baseline, `EVD-007`, `EVD-008`, `EVD-059` | `DES-001`, `DES-006`, `DES-RWD-006` | `SPEC-ACC-001`; `AC-008`, `AC-012` | Implementation stage |
+| `REQ-AR-002` | Project quality baseline, `EVD-049`, `EVD-059`, `AUD-002`, `AUD-003` | `DES-INT-001`–`DES-INT-003` | `SPEC-ACC-002`, `SPEC-INT-001`–`SPEC-INT-003`; `AC-005`–`AC-008`, `AC-013` | Implementation stage |
+| `REQ-AR-003` | `EVD-049`, `EVD-059`, `AUD-002`, `AUD-003` | `DES-INT-001`, `DES-INT-002` | `SPEC-ACC-002`; `AC-007` | Implementation stage |
+| `REQ-AR-004` | Project quality baseline, `EVD-051`–`EVD-059`, `AUD-003` | `DES-002`, `DES-003`, `DES-007` | `SPEC-ACC-003`; `AC-009`, `AC-013`, `AC-014` | Implementation stage |
+| `REQ-AR-005` | Project quality baseline, `EVD-015`–`EVD-019`, `AUD-001` | `DES-RWD-001`–`DES-RWD-006` | `SPEC-ACC-001`, `SPEC-ACC-004`; `AC-011`, `AC-012` | Implementation stage |
+| `REQ-AR-006` | Project quality baseline, `EVD-048` | `DES-INT-001`, `DES-INT-002` | `SPEC-ACC-004`; `AC-017` | Implementation stage |
+| `REQ-NFR-001` | Project quality baseline, `EVD-009`–`EVD-045` | `DES-001`–`DES-006`, responsive intent | `SPEC-BEH-001`, `SPEC-BEH-002`, `SPEC-BEH-005`; `AC-002`, `AC-004`, `AC-010`, `AC-014` | Implementation stage |
+| `REQ-NFR-002` | `AUD-001`, `EVD-015`–`EVD-019` | `DES-RWD-001`–`DES-RWD-006` | `SPEC-BEH-006`, `SPEC-VAL-001`; `AC-011`, `AC-016` | Implementation stage |
+| `REQ-CON-001` | `SRC-REPO-001`, `PROJECT-CONTEXT.md`, root `AGENTS.md` | N/A | Specification scope preserves existing Astro target | Planning / implementation |
+| `REQ-CON-002` | `SRC-REPO-001`, `PROJECT-CONTEXT.md`, root `AGENTS.md` | N/A | Specification preserves repository/tooling constraints | Planning / implementation |
+| `REQ-CON-003` | Root `AGENTS.md`, `PROJECT-CONTEXT.md` | N/A | Workflow/deployment policy remains authoritative | PR / preview / merge validation |
+| `REQ-CON-004` | Root `AGENTS.md`, project instructions | N/A | No Stage 4 behavior expands Figma editing scope | Ongoing process validation |
+| `REQ-CON-005` | `PROJECT-CONTEXT.md`, `DESIGN-AUDIT.md`, Stage 2 rules | N/A | Specification explicitly excludes unsupported capabilities | Planning / implementation |
 
 ## 18. Review
 
@@ -391,11 +391,11 @@ Project implementation Definition of Done remains downstream: later `DESIGN.md`,
 
 - [x] Requirement identifiers use the canonical `REQ-*` namespaces.
 - [x] Every material requirement cites approved evidence or authoritative project constraints.
-- [x] `SRC-DS-001` was structurally reverified as unchanged at Stage 2 entry through `VER-003`.
+- [x] `SRC-DS-001` was structurally reverified as unchanged at Stage 2 entry through `VER-003` and subsequently reverified in downstream stages.
 - [x] The document does not silently treat 375, 768, or 1440 px as implementation breakpoints.
 - [x] The document does not invent social destinations, an interactive map, backend behavior, browser targets, performance thresholds, or security/privacy rules.
-- [x] Observed source gaps are retained as non-blocking questions and risks for the owning downstream stages.
-- [x] The document remains consistent with `PROJECT-CONTEXT.md`, `DESIGN-AUDIT.md`, root `AGENTS.md`, and the Standard/Gated workflow rules.
-- [x] No Stage 2 blocker requires a profile upgrade or rebaseline.
+- [x] Observed source gaps remain explicit and are either safely constrained downstream or retained as non-blocking implementation/planning questions.
+- [x] The document remains consistent with `PROJECT-CONTEXT.md`, `DESIGN-AUDIT.md`, `DESIGN.md`, `SPEC.md`, root `AGENTS.md`, and the Standard/Gated workflow rules.
+- [x] Stage 5 reconciliation replaced stale downstream `Pending` markers with the approved Stage 3/4 traceability relationships.
 
-**Pass 2 result:** Passed. `REQUIREMENTS.md` is ready for project-owner review. The workflow remains at Stage 2 in Gated mode; no Stage 2 passing gate is recorded until explicit owner approval.
+**Pass 2 result:** Passed. `ART-REQUIREMENTS` is approved, `GATE-003` is Passed, and Stage 5 cross-document reconciliation found no blocking requirements inconsistency.
