@@ -1,3 +1,4 @@
+# One-shot Stage 10 task-start runner; removed before task completion.
 name: Agent P01-T01 Start
 
 on:
