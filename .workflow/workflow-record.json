@@ -751,39 +751,46 @@
           "name": "Astro build",
           "kind": "Build",
           "required": true,
-          "status": "Not executed",
+          "status": "Passed",
           "expected": "`pnpm build` from `frontend/` succeeds and produces the static site without missing asset or font-import failures.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-001"
-          ],
+          "actual": "pnpm install --frozen-lockfile and pnpm build succeeded; dist/index.html exists.",
           "command": "pnpm build",
-          "environment": "frontend/"
+          "environment": "frontend/ on GitHub Actions ubuntu-24.04 / Node 24",
+          "executedAt": "2026-08-16T04:36:47Z",
+          "evidence": [
+            "GitHub Actions run 31927029258: Astro build passed."
+          ],
+          "references": []
         },
         {
           "name": "Foundation semantics",
           "kind": "Accessibility",
           "required": true,
-          "status": "Not executed",
+          "status": "Passed",
           "expected": "The shared document shell preserves page-owned `<main>`/heading structure, meaningful/decorative image conventions, visible focus defaults, and no accessibility regressions introduced by the foundation.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-001"
-          ]
+          "actual": "Source assertions verified lang, route slot, page-owned main/h1, no hydration, image semantics, and visible focus defaults.",
+          "command": "node inline foundation assertions",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24",
+          "executedAt": "2026-08-16T04:36:47Z",
+          "evidence": [
+            "GitHub Actions run 31927029258: semantic foundation assertions passed."
+          ],
+          "references": []
         },
         {
           "name": "Foundation visual inputs",
           "kind": "Visual",
           "required": true,
-          "status": "Not executed",
+          "status": "Passed",
           "expected": "Approved color, spacing, typography roles, and source-controlled asset inputs are represented; typography fidelity is either backed by authoritative distributable font files or explicitly blocked/accepted as a documented deviation.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-001"
-          ]
+          "actual": "Approved color/type/spacing tokens and 22 local source assets were verified; Google Fonts binaries and OFL files resolve the typography fidelity risk.",
+          "command": "node inline visual assertions; file local font binaries",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24",
+          "executedAt": "2026-08-16T04:36:47Z",
+          "evidence": [
+            "GitHub Actions run 31927029258: visual input assertions and local font-file verification passed."
+          ],
+          "references": []
         }
       ]
     },

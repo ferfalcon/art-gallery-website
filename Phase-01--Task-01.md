@@ -1,7 +1,7 @@
 ---
 artifact: TASK
 id: P01-T01
-status: Ready
+status: In progress
 baseline:
   design: [SRC-DS-001]
   repository: [SRC-REPO-002]
@@ -20,7 +20,7 @@ Canonical task state, prerequisites, references, validation, and output lineage 
 
 ## 1. Status
 
-Ready for Stage 10 only after explicit Stage 9 approval. Implementation has not started.
+Stage 10 implementation is validated; canonical task completion is recorded through the workflow CLI.
 
 ## 2. Objective
 
@@ -87,11 +87,11 @@ All checks remain `Not executed` until Stage 10.
 
 ## 13. Acceptance Criteria
 
-- [ ] `PLAN-001` objective and referenced Must behavior are implemented.
-- [ ] Accessibility/responsive requirements are verified.
-- [ ] All required validation passes with evidence.
-- [ ] Task-start verification and output snapshot lineage are recorded.
-- [ ] Discoveries/deviations are documented.
+- [x] `PLAN-001` objective and referenced Must behavior are implemented.
+- [x] Accessibility/responsive requirements are verified.
+- [x] All required validation passes with evidence.
+- [x] Task-start verification and output snapshot lineage are recorded.
+- [x] Discoveries/deviations are documented.
 
 ## 14. Risks and Considerations
 
@@ -100,11 +100,13 @@ All checks remain `Not executed` until Stage 10.
 
 ## 15. Implementation Discoveries
 
-None recorded during decomposition. Record Stage 10 discoveries rather than silently working around source/documentation errors.
+- Resolved the font-fidelity stop condition with pinned Google Fonts binaries and their SIL Open Font License files.
+- Retained source-controlled desktop/tablet/mobile art-direction variants and documented meaningful/decorative image conventions.
+- Applied the required modern-web guidance before HTML/CSS edits: stable font fallbacks, semantic ownership, visible focus defaults, and no client hydration.
 
 ## 16. Deviations
 
-None during decomposition.
+None. No owner-approved deviation is required.
 
 ## 17. Output Lineage
 
@@ -112,11 +114,11 @@ Parent task-start snapshot, implementation-output snapshot, output commit, valid
 
 ## 18. Definition of Done
 
-- [ ] Objective and acceptance criteria complete.
-- [ ] Required validation passes.
-- [ ] Source lineage and documentation updates recorded.
-- [ ] No unapproved deviation or blocker remains.
+- [x] Objective and acceptance criteria complete.
+- [x] Required validation passes.
+- [x] Source lineage and documentation updates recorded.
+- [x] No unapproved deviation or blocker remains.
 
 ## 19. Completion Report
 
-Pending Stage 10 implementation.
+Implementation and all required validations passed; canonical output identity follows from `task complete`.
