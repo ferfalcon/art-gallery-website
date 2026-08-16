@@ -1,0 +1,130 @@
+name: Agent P02-T02 Verify
+on:
+  push:
+    branches: [agent/p01-t01-visual-foundation]
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Build and source-check Location
+        run: |
+          set -euo pipefail
+          corepack enable
+          node docs/implementation-workflow/cli/design-workflow.mjs context --json > /tmp/context.json
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const c=JSON.parse(fs.readFileSync('/tmp/context.json','utf8'));
+          if(c.stage?.number!==10||c.tasks?.current?.id!=='P02-T02'||c.policy?.codeEdits!=='allowed-with-current-task-scope') throw new Error('P02-T02 is not active.');
+          NODE
+          cd frontend
+          pnpm install --frozen-lockfile
+          pnpm build
+          test -f dist/location/index.html
+          test -z "$(find dist -name '*.js' -type f -print -quit)"
+          cd ..
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const map=fs.readFileSync('frontend/src/components/MapHero.astro','utf8');
+          const details=fs.readFileSync('frontend/src/components/LocationDetails.astro','utf8');
+          const page=fs.readFileSync('frontend/src/pages/location.astro','utf8');
+          const all=map+details+page;
+          const errors=[]; const check=(ok,msg)=>{if(!ok)errors.push(msg)};
+          check((details.match(/<h1\b/g)??[]).length===1,'exactly one h1');
+          check(details.includes('<address class="location-details__address">'),'semantic address');
+          check(details.includes('99 King Street')&&details.includes('RI 02840')&&details.includes('United States of America'),'exact address copy');
+          check(map.includes('href="/"')&&map.includes('label="Back to Home"')&&map.includes('direction="back"'),'explicit Back Home contract');
+          check((map.match(/<source\b/g)??[]).length===2&&map.includes('mapMobile.src')&&map.includes('mapTablet.src'),'responsive local map art direction');
+          check((map.match(/alt=""/g)??[]).length===2&&map.includes('aria-hidden="true"'),'decorative map and marker');
+          check(!/<iframe\b|navigator\.geolocation|mapbox|leaflet|google\.maps|role="application"|client:|onclick|on:click/i.test(all),'no interactive-map/client behavior');
+          check(page.includes('<Footer theme="gold"'),'Gold Footer');
+          check(!/overflow-x\s*:\s*hidden/i.test(all),'no overflow hiding');
+          for(const f of ['frontend/src/assets/map/desktop.jpg','frontend/src/assets/map/tablet.jpg','frontend/src/assets/map/mobile.jpg']) check(fs.existsSync(f)&&fs.statSync(f).size>0,`missing ${f}`);
+          if(errors.length){console.error(errors.join('\n'));process.exit(1)}
+          console.log('Location source semantics passed.');
+          NODE
+      - name: Render Location at anchors and transition widths
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          python3 -m http.server 4321 --directory frontend/dist >/tmp/location-server.log 2>&1 &
+          SERVER_PID=$!
+          PROFILE=/tmp/location-cdp
+          rm -rf "$PROFILE" && mkdir -p "$PROFILE"
+          "$CHROME" --headless --no-sandbox --disable-dev-shm-usage --disable-gpu --hide-scrollbars --remote-debugging-address=127.0.0.1 --remote-debugging-port=0 --user-data-dir="$PROFILE" about:blank >/tmp/location-chrome.log 2>&1 &
+          CHROME_PID=$!
+          trap 'kill $SERVER_PID $CHROME_PID 2>/dev/null || true' EXIT
+          for i in $(seq 1 60); do
+            [ -s "$PROFILE/DevToolsActivePort" ] && break
+            kill -0 "$CHROME_PID" 2>/dev/null || { cat /tmp/location-chrome.log; exit 1; }
+            sleep .2
+          done
+          test -s "$PROFILE/DevToolsActivePort" || { cat /tmp/location-chrome.log; exit 1; }
+          export CDP_PORT="$(head -n 1 "$PROFILE/DevToolsActivePort")"
+          curl -sf "http://127.0.0.1:${CDP_PORT}/json/version" >/dev/null
+          node --input-type=module <<'NODE'
+          const port=process.env.CDP_PORT;
+          const targets=await (await fetch(`http://127.0.0.1:${port}/json`)).json();
+          const target=targets.find(t=>t.type==='page');
+          if(!target?.webSocketDebuggerUrl) throw new Error('No page target');
+          const ws=new WebSocket(target.webSocketDebuggerUrl);
+          await new Promise((resolve,reject)=>{ws.addEventListener('open',resolve,{once:true});ws.addEventListener('error',reject,{once:true})});
+          let id=0;const pending=new Map();
+          ws.addEventListener('message',event=>{const m=JSON.parse(event.data);if(!m.id)return;const p=pending.get(m.id);if(!p)return;pending.delete(m.id);m.error?p.reject(new Error(m.error.message)):p.resolve(m.result)});
+          const send=(method,params={})=>new Promise((resolve,reject)=>{const n=++id;pending.set(n,{resolve,reject});ws.send(JSON.stringify({id:n,method,params}))});
+          await send('Page.enable');await send('Runtime.enable');
+          const widths=[1440,1276,1073,1072,900,768,640,631,630,480,375];
+          const results=[];
+          for(const width of widths){
+            await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});
+            await send('Page.navigate',{url:'http://127.0.0.1:4321/location/'});
+            await new Promise(r=>setTimeout(r,250));
+            await send('Runtime.evaluate',{expression:'document.fonts.ready',awaitPromise:true});
+            const out=await send('Runtime.evaluate',{returnByValue:true,expression:`(()=>{const rect=s=>{const n=document.querySelector(s);if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height,bottom:r.bottom,right:r.right}};const map=document.querySelector('.map-hero__artwork img');return{width:innerWidth,overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,h1Count:document.querySelectorAll('h1').length,addressCount:document.querySelectorAll('address').length,href:document.querySelector('a.primary-action')?.getAttribute('href'),scripts:document.querySelectorAll('script[src]').length,hero:rect('[data-map-hero]'),action:rect('a.primary-action'),marker:rect('[data-location-marker]'),details:rect('[data-location-details]'),title:rect('[data-location-title]'),copy:rect('[data-location-copy]'),footer:rect('footer'),mapSrc:map?.currentSrc,copyBottom:rect('[data-location-copy]')?.bottom}})()`});
+            results.push(out.result.value);
+          }
+          const errors=[];const near=(a,b,t=2)=>Math.abs(a-b)<=t;
+          for(const r of results){
+            if(r.overflow>1)errors.push(`${r.width}px overflow=${r.overflow}`);
+            if(r.h1Count!==1||r.addressCount!==1)errors.push(`${r.width}px semantics h1/address=${r.h1Count}/${r.addressCount}`);
+            if(r.href!=='/')errors.push(`${r.width}px href=${r.href}`);
+            if(r.scripts!==0)errors.push(`${r.width}px scripts=${r.scripts}`);
+            if(!r.action||r.action.x<0||r.action.right>r.width+1||r.action.y<0||r.action.bottom>r.hero.bottom+1)errors.push(`${r.width}px action not visible ${JSON.stringify(r.action)}`);
+            if(!r.marker||r.marker.x<0||r.marker.right>r.width+1||r.marker.y<0||r.marker.bottom>r.hero.bottom+1)errors.push(`${r.width}px marker not visible ${JSON.stringify(r.marker)}`);
+            if(r.copyBottom>r.details.bottom+2)errors.push(`${r.width}px details content escapes section by ${r.copyBottom-r.details.bottom}px`);
+            if(!near(r.footer.y,r.details.bottom,2))errors.push(`${r.width}px footer/details gap ${r.footer.y-r.details.bottom}`);
+          }
+          const d=results.find(r=>r.width===1440);
+          if(!near(d.hero.width,1440)||!near(d.hero.height,600))errors.push(`1440 hero ${JSON.stringify(d.hero)}`);
+          if(!near(d.action.x,156)||!near(d.action.y,16)||!near(d.action.width,260)||!near(d.action.height,72))errors.push(`1440 action ${JSON.stringify(d.action)}`);
+          if(!near(d.marker.x,687)||!near(d.marker.y,256)||!near(d.marker.width,66)||!near(d.marker.height,88))errors.push(`1440 marker ${JSON.stringify(d.marker)}`);
+          if(!near(d.details.y,600)||!near(d.details.height,569)||!near(d.title.x,165)||!near(d.title.y,730)||!near(d.title.width,350)||!near(d.copy.x,735)||!near(d.copy.y,730)||!near(d.copy.width,540))errors.push(`1440 details ${JSON.stringify({details:d.details,title:d.title,copy:d.copy})}`);
+          if(!near(d.footer.y,1169)||!near(d.footer.height,244,3))errors.push(`1440 footer ${JSON.stringify(d.footer)}`);
+          if(!d.mapSrc?.includes('desktop'))errors.push(`1440 map source ${d.mapSrc}`);
+          const t=results.find(r=>r.width===768);
+          if(!near(t.hero.width,768)||!near(t.hero.height,600))errors.push(`768 hero ${JSON.stringify(t.hero)}`);
+          if(!near(t.action.x,39)||!near(t.action.y,16))errors.push(`768 action ${JSON.stringify(t.action)}`);
+          if(!near(t.marker.x,351)||!near(t.marker.y,256))errors.push(`768 marker ${JSON.stringify(t.marker)}`);
+          if(!near(t.details.y,600)||!near(t.details.height,411)||!near(t.title.x,40)||!near(t.title.y,680)||!near(t.title.width,223)||!near(t.copy.x,330)||!near(t.copy.y,680)||!near(t.copy.width,398))errors.push(`768 details ${JSON.stringify({details:t.details,title:t.title,copy:t.copy})}`);
+          if(!near(t.footer.y,1011)||!near(t.footer.height,208,3))errors.push(`768 footer ${JSON.stringify(t.footer)}`);
+          if(!t.mapSrc?.includes('tablet'))errors.push(`768 map source ${t.mapSrc}`);
+          const m=results.find(r=>r.width===375);
+          if(!near(m.hero.width,375)||!near(m.hero.height,550))errors.push(`375 hero ${JSON.stringify(m.hero)}`);
+          if(!near(m.action.x,10)||!near(m.action.y,10)||!near(m.action.width,260)||!near(m.action.height,72))errors.push(`375 action ${JSON.stringify(m.action)}`);
+          if(!near(m.marker.x,154.5)||!near(m.marker.y,231)||!near(m.marker.width,66)||!near(m.marker.height,88))errors.push(`375 marker ${JSON.stringify(m.marker)}`);
+          if(!near(m.details.y,550)||!near(m.details.height,533)||!near(m.title.x,16)||!near(m.title.y,630)||!near(m.title.width,343)||!near(m.copy.x,16)||!near(m.copy.width,343))errors.push(`375 details ${JSON.stringify({details:m.details,title:m.title,copy:m.copy})}`);
+          if(!near(m.footer.y,1083)||!near(m.footer.width,375))errors.push(`375 footer ${JSON.stringify(m.footer)}`);
+          if(!m.mapSrc?.includes('mobile'))errors.push(`375 map source ${m.mapSrc}`);
+          const preDesktop=results.find(r=>r.width===1073),tabletEdge=results.find(r=>r.width===1072),preMobile=results.find(r=>r.width===631),mobileEdge=results.find(r=>r.width===630);
+          if(!near(preDesktop.hero.height,600)||!near(tabletEdge.hero.height,600))errors.push('1073/1072 hero transition failed');
+          if(!(tabletEdge.action.x<preDesktop.action.x))errors.push(`1073→1072 action did not shift: ${preDesktop.action.x}→${tabletEdge.action.x}`);
+          if(!near(preMobile.hero.height,600)||!near(mobileEdge.hero.height,550))errors.push(`631→630 hero transition failed: ${preMobile.hero.height}→${mobileEdge.hero.height}`);
+          if(!(mobileEdge.action.x<preMobile.action.x))errors.push(`631→630 action did not shift: ${preMobile.action.x}→${mobileEdge.action.x}`);
+          console.log(JSON.stringify(results,null,2));ws.close();if(errors.length){console.error(errors.join('\n'));process.exit(1)}
+          NODE
