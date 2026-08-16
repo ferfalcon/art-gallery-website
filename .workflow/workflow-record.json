@@ -7,12 +7,12 @@
   },
   "state": {
     "stage": 10,
-    "status": "Ready",
+    "status": "In progress",
     "activeInputs": [
       "SRC-DS-001",
       "SRC-REPO-002"
     ],
-    "currentTask": null,
+    "currentTask": "P03-T01",
     "latestOutput": "SRC-REPO-006",
     "latestValidationRuntime": null,
     "architectureDecision": {
@@ -1061,7 +1061,7 @@
     },
     {
       "id": "P03-T01",
-      "status": "Ready",
+      "status": "In progress",
       "baseline": "SRC-REPO-002",
       "prerequisites": [
         "P02-T01",
