@@ -1,0 +1,110 @@
+name: Agent P03-T01 Integration
+on:
+  push:
+    branches: [agent/p01-t01-visual-foundation]
+permissions:
+  contents: read
+jobs:
+  integration:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Build and static integration sanity
+        run: |
+          set -euo pipefail
+          corepack enable
+          node docs/implementation-workflow/cli/design-workflow.mjs context --json > /tmp/context.json
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const c=JSON.parse(fs.readFileSync('/tmp/context.json','utf8'));
+          if(c.stage?.number!==10||c.tasks?.current?.id!=='P03-T01') throw new Error('P03-T01 is not active.');
+          NODE
+          test ! -e frontend/src/components/Welcome.astro
+          test ! -e frontend/src/assets/astro.svg
+          test ! -e frontend/src/assets/background.svg
+          cd frontend
+          pnpm install --frozen-lockfile
+          pnpm build
+          test -f dist/index.html
+          test -f dist/location/index.html
+          test -z "$(find dist -name '*.js' -type f -print -quit)"
+          cd ..
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const home=fs.readFileSync('frontend/src/pages/index.astro','utf8');
+          const location=fs.readFileSync('frontend/src/pages/location.astro','utf8');
+          const hero=fs.readFileSync('frontend/src/components/HomeHero.astro','utf8');
+          const map=fs.readFileSync('frontend/src/components/MapHero.astro','utf8');
+          const details=fs.readFileSync('frontend/src/components/LocationDetails.astro','utf8');
+          const action=fs.readFileSync('frontend/src/components/PrimaryAction.astro','utf8');
+          const footer=fs.readFileSync('frontend/src/components/Footer.astro','utf8');
+          const all=home+location+hero+map+details+action+footer;
+          const errors=[];const check=(ok,msg)=>{if(!ok)errors.push(msg)};
+          check(home.includes('<main class="home-main"'),'Home main landmark');
+          check(location.includes('<main>'),'Location main landmark');
+          check((hero.match(/<h1\b/g)??[]).length===1,'Home one h1');
+          check((details.match(/<h1\b/g)??[]).length===1,'Location one h1');
+          check(details.includes('<address'),'Location address');
+          check(hero.includes('href="/location/"'),'Home→Location native href');
+          check(map.includes('href="/"'),'Location→Home native href');
+          check(!/client:|onclick|on:click|<iframe\b|navigator\.geolocation|mapbox|leaflet|google\.maps/i.test(all),'No hydration/faux map behavior');
+          check(action.includes(':focus-visible'),'Shared visible focus state');
+          check(!/<a\b/.test(footer),'Social artwork remains noninteractive');
+          if(errors.length){console.error(errors.join('\n'));process.exit(1)}
+          NODE
+      - name: Browser regression, navigation, focus, resize and reflow
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          python3 -m http.server 4321 --directory frontend/dist >/tmp/integration-server.log 2>&1 &
+          SERVER_PID=$!
+          PROFILE=/tmp/integration-cdp
+          rm -rf "$PROFILE" && mkdir -p "$PROFILE"
+          "$CHROME" --headless --no-sandbox --disable-dev-shm-usage --disable-gpu --hide-scrollbars --remote-debugging-address=127.0.0.1 --remote-debugging-port=0 --user-data-dir="$PROFILE" about:blank >/tmp/integration-chrome.log 2>&1 &
+          CHROME_PID=$!
+          trap 'kill $SERVER_PID $CHROME_PID 2>/dev/null || true' EXIT
+          for i in $(seq 1 60); do [ -s "$PROFILE/DevToolsActivePort" ] && break; kill -0 "$CHROME_PID" 2>/dev/null || { cat /tmp/integration-chrome.log; exit 1; }; sleep .2; done
+          test -s "$PROFILE/DevToolsActivePort"
+          export CDP_PORT="$(head -n 1 "$PROFILE/DevToolsActivePort")"
+          node --input-type=module <<'NODE'
+          const targets=await (await fetch(`http://127.0.0.1:${process.env.CDP_PORT}/json`)).json();
+          const target=targets.find(t=>t.type==='page');
+          const ws=new WebSocket(target.webSocketDebuggerUrl);
+          await new Promise((r,j)=>{ws.addEventListener('open',r,{once:true});ws.addEventListener('error',j,{once:true})});
+          let id=0;const pending=new Map();ws.addEventListener('message',e=>{const m=JSON.parse(e.data);if(!m.id)return;const p=pending.get(m.id);if(!p)return;pending.delete(m.id);m.error?p.reject(new Error(m.error.message)):p.resolve(m.result)});
+          const send=(method,params={})=>new Promise((resolve,reject)=>{const n=++id;pending.set(n,{resolve,reject});ws.send(JSON.stringify({id:n,method,params}))});
+          await send('Page.enable');await send('Runtime.enable');
+          const wait=async()=>{await new Promise(r=>setTimeout(r,180));await send('Runtime.evaluate',{expression:'document.fonts.ready',awaitPromise:true})};
+          const evalValue=async expression=>(await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true})).result.value;
+          const widths=[1440,1073,1072,900,768,701,700,631,630,480,375,320];
+          const results=[];
+          for(const path of ['/','/location/']) for(const width of widths){
+            await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});
+            await send('Page.navigate',{url:`http://127.0.0.1:4321${path}`});await wait();
+            const r=await evalValue(`(()=>{const html=document.documentElement;const focus=document.querySelector('a.primary-action');focus?.focus();const s=focus?getComputedStyle(focus):null;return{path:location.pathname,width:innerWidth,overflow:html.scrollWidth-html.clientWidth,h1:document.querySelectorAll('h1').length,main:document.querySelectorAll('main').length,address:document.querySelectorAll('address').length,scripts:document.querySelectorAll('script[src]').length,href:focus?.getAttribute('href'),focusOutline:s?.outlineStyle,focusOutlineWidth:s?.outlineWidth,focusVisible:document.activeElement===focus}})()`);
+            results.push(r);
+          }
+          const errors=[];
+          for(const r of results){if(r.overflow>1)errors.push(`${r.path}@${r.width} overflow=${r.overflow}`);if(r.h1!==1||r.main!==1)errors.push(`${r.path}@${r.width} h1/main=${r.h1}/${r.main}`);if(r.scripts!==0)errors.push(`${r.path}@${r.width} scripts=${r.scripts}`);if(!r.focusVisible||r.focusOutline==='none'||parseFloat(r.focusOutlineWidth)<3)errors.push(`${r.path}@${r.width} focus=${r.focusVisible}/${r.focusOutline}/${r.focusOutlineWidth}`);if(r.path==='/'&&(r.href!=='/location/'||r.address!==0))errors.push(`Home contract failed @${r.width}`);if(r.path==='/location/'&&(r.href!=='/'||r.address!==1))errors.push(`Location contract failed @${r.width}`)}
+
+          await send('Emulation.setDeviceMetricsOverride',{width:768,height:1000,deviceScaleFactor:1,mobile:false});
+          await send('Page.navigate',{url:'http://127.0.0.1:4321/'});await wait();
+          await evalValue(`document.querySelector('a.primary-action').click(); true`);await wait();
+          const forward=await evalValue(`location.pathname`);if(forward!=='/location/')errors.push(`Native forward navigation landed on ${forward}`);
+          await evalValue(`document.querySelector('a.primary-action').click(); true`);await wait();
+          const back=await evalValue(`location.pathname`);if(back!=='/')errors.push(`Native back navigation landed on ${back}`);
+
+          const resize=[];
+          for(const path of ['/','/location/']) for(const width of [768,375]){
+            await send('Emulation.setDeviceMetricsOverride',{width,height:1200,deviceScaleFactor:1,mobile:false});
+            await send('Page.navigate',{url:`http://127.0.0.1:4321${path}`});await wait();
+            const r=await evalValue(`(()=>{document.documentElement.style.fontSize='200%';const html=document.documentElement;const a=document.querySelector('a.primary-action');const ar=a.getBoundingClientRect();const h=document.querySelector('h1').getBoundingClientRect();return{path:location.pathname,width:innerWidth,overflow:html.scrollWidth-html.clientWidth,action:{x:ar.x,right:ar.right,width:ar.width,height:ar.height},heading:{x:h.x,right:h.right,width:h.width,height:h.height},text:getComputedStyle(document.body).fontSize}})()`);
+            resize.push(r);
+          }
+          for(const r of resize){if(r.overflow>1)errors.push(`200% text ${r.path}@${r.width} overflow=${r.overflow}`);if(r.action.x<0||r.action.right>r.width+1)errors.push(`200% text ${r.path}@${r.width} action clipped ${JSON.stringify(r.action)}`);if(r.heading.x<0||r.heading.right>r.width+1)errors.push(`200% text ${r.path}@${r.width} heading clipped ${JSON.stringify(r.heading)}`)}
+          console.log(JSON.stringify({results,resize,forward,back},null,2));ws.close();if(errors.length){console.error(errors.join('\n'));process.exit(1)}
+          NODE
