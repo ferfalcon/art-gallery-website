@@ -34,45 +34,54 @@ const arrow = direction === "back" ? arrowLeft : arrowRight;
 <style>
   .primary-action {
     display: inline-flex;
-    width: 16.25rem;
-    height: 4.5rem;
+    width: min(16.25rem, 100%);
+    min-height: 4.5rem;
     color: var(--color-surface);
     font-family: var(--font-display);
     font-size: var(--type-action-label);
     font-weight: var(--font-weight-display-extra-bold);
     line-height: 1;
     letter-spacing: var(--tracking-action);
+    text-align: center;
     text-decoration: none;
     text-transform: uppercase;
   }
+
   .primary-action__label,
   .primary-action__icon {
     display: flex;
-    height: 4.5rem;
+    min-height: 4.5rem;
     align-items: center;
     justify-content: center;
   }
+
   .primary-action__label {
-    width: 12.75rem;
+    min-width: 0;
+    flex: 1 1 12.75rem;
     padding: 1.5rem 2rem;
+    overflow-wrap: anywhere;
     background: var(--color-text-strong);
-    white-space: nowrap;
   }
+
   .primary-action__icon {
     width: 3.5rem;
     flex: 0 0 3.5rem;
     background: var(--color-accent);
   }
+
   .primary-action__icon img {
     width: 0.625rem;
     height: 1.5rem;
   }
+
   .primary-action:hover .primary-action__label {
     background: var(--color-accent);
   }
+
   .primary-action:hover .primary-action__icon {
     background: var(--color-text-strong);
   }
+
   .primary-action:focus-visible {
     outline: 0.25rem solid var(--color-accent);
     outline-offset: 0.1875rem;
