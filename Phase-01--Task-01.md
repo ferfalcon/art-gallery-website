@@ -1,7 +1,7 @@
 ---
 artifact: TASK
 id: P01-T01
-status: In progress
+status: Complete
 baseline:
   design: [SRC-DS-001]
   repository: [SRC-REPO-002]
@@ -20,7 +20,7 @@ Canonical task state, prerequisites, references, validation, and output lineage 
 
 ## 1. Status
 
-Stage 10 implementation is validated; canonical task completion is recorded through the workflow CLI.
+Complete. Implementation and all required validation passed; canonical completion is recorded through the workflow CLI.
 
 ## 2. Objective
 
@@ -121,4 +121,4 @@ Parent task-start snapshot, implementation-output snapshot, output commit, valid
 
 ## 19. Completion Report
 
-Implementation and all required validations passed; canonical output identity follows from `task complete`.
+Complete. Build, Accessibility, and Visual checks passed. Implementation output commit: `b22a9094604c83dd4278dd00e2d0c7c94f34667e`; the canonical workflow record owns the generated output snapshot and validation lineage.
