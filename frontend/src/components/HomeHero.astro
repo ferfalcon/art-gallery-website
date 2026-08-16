@@ -1,0 +1,197 @@
+---
+import PrimaryAction from "./PrimaryAction.astro";
+import heroDesktop from "../assets/gallery/desktop/hero.jpg";
+import heroTablet from "../assets/gallery/tablet/hero.jpg";
+import heroMobile from "../assets/gallery/mobile/hero.jpg";
+---
+
+<section class="home-hero" aria-labelledby="home-title" data-home-hero>
+  <picture class="home-hero__image" aria-hidden="true">
+    <source media="(max-width: 39.375rem)" srcset={heroMobile.src} />
+    <source media="(max-width: 67rem)" srcset={heroTablet.src} />
+    <img
+      src={heroDesktop.src}
+      alt=""
+      width={heroDesktop.width}
+      height={heroDesktop.height}
+      fetchpriority="high"
+      decoding="async"
+    />
+  </picture>
+
+  <div class="home-hero__content">
+    <h1 id="home-title" class="home-hero__title" data-home-title>
+      <span>Modern</span>
+      <span>Art Gallery</span>
+    </h1>
+
+    <div class="home-hero__intro" data-home-intro>
+      <p>
+        The arts in the collection of the Modern Art Gallery all started from a spark of inspiration. Will these pieces inspire you? Visit us and find out.
+      </p>
+      <PrimaryAction href="/location/" label="Our Location" direction="forward" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-hero {
+    position: relative;
+    inline-size: min(100%, 90rem);
+    block-size: clamp(43.75rem, 55.5556vi, 50rem);
+    background: var(--color-surface);
+  }
+
+  .home-hero::before {
+    position: absolute;
+    z-index: 0;
+    inset: 0 auto 0 0;
+    inline-size: 31.2717%;
+    background: var(--color-text-strong);
+    content: "";
+  }
+
+  .home-hero__image {
+    position: absolute;
+    z-index: 1;
+    inset-block: 0;
+    inset-inline-start: 31.3194%;
+    display: block;
+    inline-size: 37.526%;
+    block-size: 100%;
+  }
+
+  .home-hero__image img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .home-hero__content {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+  }
+
+  .home-hero__title {
+    position: absolute;
+    inset-block-start: 23.625%;
+    inset-inline-start: 11.4663%;
+    inline-size: 35.72%;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+    color: var(--color-text-strong);
+    font-size: clamp(4.375rem, 6.6667vi, 6rem);
+    line-height: var(--leading-hero);
+    text-transform: uppercase;
+  }
+
+  .home-hero__title::before {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 44.5% 0 0);
+    color: var(--color-surface);
+    content: "MODERN\A ART GALLERY";
+    white-space: pre;
+  }
+
+  .home-hero__title span {
+    display: block;
+  }
+
+  .home-hero__intro {
+    position: absolute;
+    inset-block-start: 31.875%;
+    inset-inline-start: 64.2361%;
+    display: flex;
+    inline-size: 24.3056%;
+    min-inline-size: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-800);
+    overflow-wrap: anywhere;
+    font-size: var(--type-body-large);
+    line-height: var(--leading-body);
+  }
+
+  @media (max-width: 67rem) {
+    .home-hero {
+      block-size: 43.75rem;
+    }
+
+    .home-hero::before {
+      display: none;
+    }
+
+    .home-hero__image {
+      position: absolute;
+      inset-inline-start: 0;
+      inline-size: 56.901%;
+      block-size: 43.75rem;
+    }
+
+    .home-hero__content {
+      inset: 50% auto auto 50.651%;
+      display: flex;
+      inline-size: 44.1406%;
+      min-inline-size: 0;
+      flex-direction: column;
+      gap: var(--space-600);
+      transform: translateY(-50%);
+    }
+
+    .home-hero__title {
+      position: static;
+      inline-size: 100%;
+      font-size: 4.375rem;
+    }
+
+    .home-hero__title::before {
+      display: none;
+    }
+
+    .home-hero__intro {
+      position: static;
+      display: flex;
+      inline-size: 100%;
+      flex-direction: column;
+      gap: var(--space-600);
+      font-size: var(--type-body-medium);
+    }
+  }
+
+  @media (max-width: 39.375rem) {
+    .home-hero {
+      display: flex;
+      block-size: auto;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-400);
+    }
+
+    .home-hero__image {
+      position: relative;
+      inset: auto;
+      inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 375 / 240;
+    }
+
+    .home-hero__content {
+      position: relative;
+      inset: auto;
+      inline-size: calc(100% - 32px);
+      flex: none;
+      gap: var(--space-400);
+      transform: none;
+    }
+
+    .home-hero__title {
+      font-size: 3.75rem;
+    }
+
+    .home-hero__intro {
+      gap: var(--space-400);
+    }
+  }
+</style>

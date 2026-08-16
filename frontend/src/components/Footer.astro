@@ -1,0 +1,151 @@
+---
+import logoBlack from "../assets/brand/logo-black.svg";
+import logoWhite from "../assets/brand/logo-white.svg";
+import facebookBlack from "../assets/brand/facebook-black.svg";
+import facebookWhite from "../assets/brand/facebook.svg";
+import instagramBlack from "../assets/brand/instagram-black.svg";
+import instagramWhite from "../assets/brand/instagram.svg";
+import twitterBlack from "../assets/brand/twitter-black.svg";
+import twitterWhite from "../assets/brand/twitter.svg";
+
+interface Props {
+  theme: "dark" | "gold";
+}
+
+const { theme } = Astro.props;
+
+if (!["dark", "gold"].includes(theme)) {
+  throw new Error("Footer requires an explicit dark or gold theme.");
+}
+
+const isGold = theme === "gold";
+const logo = isGold ? logoBlack : logoWhite;
+const facebook = isGold ? facebookBlack : facebookWhite;
+const instagram = isGold ? instagramBlack : instagramWhite;
+const twitter = isGold ? twitterBlack : twitterWhite;
+---
+
+<footer class:list={["site-footer", `site-footer--${theme}`]}>
+  <div class="site-footer__content">
+    <img class="site-footer__logo" src={logo.src} alt="" width="111" height="40" />
+    <p class="site-footer__copy">
+      The Modern Art Gallery is free to all visitors and open seven days a week from 8am to 9pm. Find us at 99 King Street, Newport, USA.
+    </p>
+  </div>
+  <div class="site-footer__social" aria-hidden="true">
+    <img src={facebook.src} alt="" width="20" height="20" />
+    <img src={instagram.src} alt="" width="20" height="20" />
+    <img class="site-footer__twitter" src={twitter.src} alt="" width="20" height="17" />
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    min-height: 244px;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-block: 80px;
+    padding-inline: clamp(40px, calc((100vw - 1110px) / 2), 165px);
+  }
+
+  .site-footer--dark {
+    color: var(--color-surface);
+    background: var(--color-text-strong);
+  }
+
+  .site-footer--gold {
+    color: var(--color-text-strong);
+    background: var(--color-accent);
+  }
+
+  .site-footer__content {
+    display: flex;
+    width: 730px;
+    min-width: 0;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .site-footer__logo {
+    width: 159.572px;
+    height: 58px;
+    flex: 0 0 auto;
+  }
+
+  .site-footer__copy {
+    width: 430px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font-size: var(--type-body-medium);
+    line-height: 1.75rem;
+  }
+
+  .site-footer__social {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .site-footer__social img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .site-footer__social .site-footer__twitter {
+    height: 16.253px;
+  }
+
+  @media (max-width: 62.5rem) {
+    .site-footer {
+      min-height: 208px;
+      padding-block: 48px;
+      padding-inline: 40px;
+    }
+
+    .site-footer__content {
+      width: 450px;
+      justify-content: flex-start;
+      gap: 64px;
+    }
+
+    .site-footer__logo {
+      width: 110px;
+      height: 40px;
+    }
+
+    .site-footer__copy {
+      width: auto;
+      flex: 1 1 auto;
+      line-height: 1.4;
+    }
+  }
+
+  @media (max-width: 39.375rem) {
+    .site-footer {
+      min-height: 0;
+      flex-direction: column;
+      gap: 40px;
+      padding-block: 48px;
+    }
+
+    .site-footer--dark {
+      padding-inline: 40px;
+    }
+
+    .site-footer--gold {
+      padding-inline: 16px;
+    }
+
+    .site-footer__content {
+      width: 100%;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .site-footer__copy {
+      width: 100%;
+    }
+  }
+</style>

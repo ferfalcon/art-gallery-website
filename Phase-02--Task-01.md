@@ -1,7 +1,7 @@
 ---
 artifact: TASK
 id: P02-T01
-status: Ready
+status: Complete
 baseline:
   design: [SRC-DS-001]
   repository: [SRC-REPO-002]
@@ -20,7 +20,7 @@ Canonical task state, prerequisites, references, validation, and output lineage 
 
 ## 1. Status
 
-Ready for Stage 10 only after explicit Stage 9 approval. Implementation has not started.
+Complete. The approved responsive Home route is implemented and all four required validations passed.
 
 ## 2. Objective
 
@@ -82,14 +82,14 @@ Static/default plus shared `OUR LOCATION` hover/focus states. No loading/empty/e
 - **Home responsive reflow — Responsive, required:** 375/768/1440 plus intermediate/transition widths remain usable without horizontal overflow.
 - **Home visual fidelity — Visual, required:** approved three-anchor composition matches, especially desktop split/inverted title and tablet/mobile transformations.
 
-All checks remain `Not executed` until Stage 10.
+All four required Stage 10 checks passed with recorded build, accessibility, responsive, and visual evidence.
 
 ## 13. Acceptance Criteria
 
-- [ ] `PLAN-003` objective and referenced Must behavior are implemented.
-- [ ] Desktop split-title and responsive transformations match design intent.
-- [ ] Accessibility/responsive/visual/build checks pass.
-- [ ] Output lineage and any deviations are recorded.
+- [x] `PLAN-003` objective and referenced Must behavior are implemented.
+- [x] Desktop split-title and responsive transformations match design intent.
+- [x] Accessibility/responsive/visual/build checks pass.
+- [x] Output lineage and any deviations are recorded.
 
 ## 14. Risks and Considerations
 
@@ -98,23 +98,26 @@ All checks remain `Not executed` until Stage 10.
 
 ## 15. Implementation Discoveries
 
-None during decomposition.
+- The desktop split title uses one semantic `<h1>` plus clipped `::before` generated text, so the visual inversion never duplicates announced heading content.
+- The source-backed tablet composition takes over at 67rem, before the desktop intro/action relationship can fail.
+- Home artwork uses local responsive `<picture>` sources; the hero is prioritized and below-the-fold gallery artwork lazy-loads.
+- Runtime validation measured 1440/1276/1072/900/768/640/630 and exact 480/375 widths with zero horizontal overflow.
 
 ## 16. Deviations
 
-None during decomposition.
+None. The Home route is implemented without an owner-approved deviation.
 
 ## 17. Output Lineage
 
-Pending Stage 10 implementation.
+Implementation output commit: `082a1af8910330700fcb57c5b85f6e93baadda86`. The canonical workflow record owns the generated output snapshot and validation lineage.
 
 ## 18. Definition of Done
 
-- [ ] Objective/acceptance criteria complete.
-- [ ] All required validation passes.
-- [ ] Source/output lineage and documentation are current.
-- [ ] No unapproved deviation/blocker remains.
+- [x] Objective/acceptance criteria complete.
+- [x] All required validation passes.
+- [x] Source/output lineage and documentation are current.
+- [x] No unapproved deviation/blocker remains.
 
 ## 19. Completion Report
 
-Pending Stage 10 implementation.
+Complete. Build, Accessibility, Responsive, and Visual checks passed. Implementation output commit: `082a1af8910330700fcb57c5b85f6e93baadda86`.
