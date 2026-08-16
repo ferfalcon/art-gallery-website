@@ -1,0 +1,247 @@
+---
+import dayDesktop from "../assets/gallery/desktop/grid-day.jpg";
+import dayTablet from "../assets/gallery/tablet/grid-day.jpg";
+import dayMobile from "../assets/gallery/mobile/grid-day.jpg";
+import tallDesktop from "../assets/gallery/desktop/grid-tall.jpg";
+import tallTablet from "../assets/gallery/tablet/grid-tall.jpg";
+import tallMobile from "../assets/gallery/mobile/grid-tall.jpg";
+import inspirationDesktop from "../assets/gallery/desktop/grid-inspiration.jpg";
+import inspirationTablet from "../assets/gallery/tablet/grid-inspiration.jpg";
+import inspirationMobile from "../assets/gallery/mobile/grid-inspiration.jpg";
+---
+
+<div class="gallery-content" data-gallery-content>
+  <section class="gallery-content__day" aria-labelledby="gallery-day-title">
+    <div class="gallery-content__day-copy">
+      <h2 id="gallery-day-title">Your Day at the Gallery</h2>
+      <p>
+        Wander through our distinct collections and find new insights about our artists. Dive into the details of their creative process.
+      </p>
+    </div>
+
+    <picture class="gallery-content__day-image" aria-hidden="true">
+      <source media="(max-width: 39.375rem)" srcset={dayMobile.src} />
+      <source media="(max-width: 67rem)" srcset={dayTablet.src} />
+      <img src={dayDesktop.src} alt="" width={dayDesktop.width} height={dayDesktop.height} loading="lazy" decoding="async" />
+    </picture>
+  </section>
+
+  <section class="gallery-content__inspiration" aria-labelledby="gallery-inspiration-title">
+    <picture class="gallery-content__tall-image" aria-hidden="true">
+      <source media="(max-width: 39.375rem)" srcset={tallMobile.src} />
+      <source media="(max-width: 67rem)" srcset={tallTablet.src} />
+      <img src={tallDesktop.src} alt="" width={tallDesktop.width} height={tallDesktop.height} loading="lazy" decoding="async" />
+    </picture>
+
+    <div class="gallery-content__inspiration-column">
+      <picture class="gallery-content__inspiration-image" aria-hidden="true">
+        <source media="(max-width: 39.375rem)" srcset={inspirationMobile.src} />
+        <source media="(max-width: 67rem)" srcset={inspirationTablet.src} />
+        <img src={inspirationDesktop.src} alt="" width={inspirationDesktop.width} height={inspirationDesktop.height} loading="lazy" decoding="async" />
+      </picture>
+
+      <div class="gallery-content__inspiration-copy">
+        <h2 id="gallery-inspiration-title">Come &amp; Be Inspired</h2>
+        <p>We’re excited to welcome you to our gallery and see how our collections influence you.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .gallery-content {
+    display: flex;
+    inline-size: min(calc(100% - 2rem), 69.375rem);
+    flex-direction: column;
+    gap: var(--space-400);
+  }
+
+  .gallery-content__day,
+  .gallery-content__inspiration {
+    display: grid;
+    inline-size: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .gallery-content__day {
+    grid-template-columns: minmax(0, 21.875rem) minmax(0, 39.6875rem);
+  }
+
+  .gallery-content__day-copy {
+    display: flex;
+    min-inline-size: 0;
+    flex-direction: column;
+    gap: var(--space-400);
+  }
+
+  .gallery-content h2 {
+    font-size: var(--type-section-large);
+    line-height: var(--leading-display);
+    text-transform: uppercase;
+  }
+
+  .gallery-content p {
+    font-size: var(--type-body-large);
+    line-height: var(--leading-body);
+  }
+
+  .gallery-content picture,
+  .gallery-content img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .gallery-content img {
+    object-fit: cover;
+  }
+
+  .gallery-content__day-image {
+    inline-size: 39.6875rem;
+    block-size: 25rem;
+  }
+
+  .gallery-content__inspiration {
+    grid-template-columns: minmax(0, 39.6875rem) minmax(0, 27.8125rem);
+  }
+
+  .gallery-content__tall-image {
+    inline-size: 39.6875rem;
+    block-size: 45rem;
+  }
+
+  .gallery-content__inspiration-column {
+    display: flex;
+    inline-size: 27.8125rem;
+    min-inline-size: 0;
+    flex-direction: column;
+    gap: var(--space-400);
+  }
+
+  .gallery-content__inspiration-image {
+    inline-size: 100%;
+    block-size: 19.5625rem;
+  }
+
+  .gallery-content__inspiration-copy {
+    display: flex;
+    inline-size: 100%;
+    block-size: 23.5625rem;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-400);
+    padding: var(--space-800) var(--space-600);
+    color: var(--color-surface);
+    background: var(--color-text-strong);
+  }
+
+  .gallery-content__inspiration-copy h2 {
+    color: inherit;
+  }
+
+  @media (max-width: 67rem) {
+    .gallery-content {
+      inline-size: min(89.7135%, 62.5rem);
+      gap: var(--space-150);
+    }
+
+    .gallery-content__day {
+      grid-template-columns: 32.3657% 57.7649%;
+    }
+
+    .gallery-content__day-copy {
+      gap: var(--space-300);
+    }
+
+    .gallery-content h2 {
+      font-size: 3.125rem;
+      line-height: var(--leading-hero);
+    }
+
+    .gallery-content p {
+      font-size: var(--type-body-medium);
+    }
+
+    .gallery-content__day-image {
+      inline-size: 100%;
+      block-size: 25rem;
+    }
+
+    .gallery-content__inspiration {
+      grid-template-columns: 57.7649% 40.6386%;
+    }
+
+    .gallery-content__tall-image {
+      inline-size: 100%;
+      block-size: 45rem;
+    }
+
+    .gallery-content__inspiration-column {
+      inline-size: 100%;
+      gap: var(--space-150);
+    }
+
+    .gallery-content__inspiration-image {
+      block-size: 19.5625rem;
+    }
+
+    .gallery-content__inspiration-copy {
+      block-size: 24.75rem;
+      gap: var(--space-300);
+      padding: var(--space-1000) var(--space-400);
+    }
+  }
+
+  @media (max-width: 39.375rem) {
+    .gallery-content {
+      inline-size: calc(100% - 2rem);
+      gap: var(--space-400);
+    }
+
+    .gallery-content__day,
+    .gallery-content__inspiration {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .gallery-content__day {
+      gap: var(--space-300);
+    }
+
+    .gallery-content__day-image {
+      order: -1;
+      block-size: auto;
+      aspect-ratio: 343 / 320;
+    }
+
+    .gallery-content__day-copy {
+      gap: var(--space-300);
+    }
+
+    .gallery-content__inspiration {
+      gap: var(--space-200);
+    }
+
+    .gallery-content__tall-image {
+      block-size: auto;
+      aspect-ratio: 343 / 480;
+    }
+
+    .gallery-content__inspiration-column {
+      gap: var(--space-200);
+    }
+
+    .gallery-content__inspiration-image {
+      block-size: auto;
+      aspect-ratio: 343 / 200;
+    }
+
+    .gallery-content__inspiration-copy {
+      block-size: auto;
+      gap: var(--space-300);
+      padding: var(--space-600) var(--space-300);
+    }
+  }
+</style>
