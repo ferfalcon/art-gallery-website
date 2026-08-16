@@ -1,6 +1,6 @@
 ---
 artifact: PLAN-REVIEW
-status: Reviewed
+status: Approved
 baseline:
   design:
     - SRC-DS-001
@@ -17,7 +17,7 @@ updated: 2026-08-16
 
 ## 1. Document Information
 
-- Status: Reviewed; awaiting the Stage 8 project-owner gate.
+- Status: Approved by the project owner on 2026-08-16.
 - Review date: 2026-08-16.
 - Reviewer: ChatGPT.
 - Project: Art gallery website.
@@ -80,7 +80,7 @@ Six plan-quality issues were found. All were correctable in the owning plan with
 5. page-landmark ownership needed to be separated more clearly from the shared document shell;
 6. shared Footer ownership needed to state the source-demonstrated Dark/Gold mobile spacing difference explicitly.
 
-All six findings are corrected in `PLAN.md`. The plan can advance to Stage 9 task decomposition after owner approval. The only material residual risk is the absence of authoritative distributable font binaries/source metadata in current repository inputs. That risk does not prevent task decomposition, but the foundation task cannot claim typography fidelity until matching source-controlled font files are resolved or the project owner explicitly accepts the documented fallback deviation.
+All six findings are corrected in `PLAN.md`. Stage 8 is approved and the plan is eligible for Stage 9 task decomposition when the project owner separately instructs the workflow to continue. The only material residual risk is the absence of authoritative distributable font binaries/source metadata in current repository inputs. That risk does not prevent task decomposition, but the foundation task cannot claim typography fidelity until matching source-controlled font files are resolved or the project owner explicitly accepts the documented fallback deviation.
 
 **Readiness:** Ready with documented risks.
 
@@ -260,7 +260,7 @@ No unresolved technical decision requires returning to Stages 0–7. The font-so
 
 **Ready with documented risks**
 
-The plan is ready for Stage 9 task decomposition after explicit project-owner approval of Stage 8. The unresolved font-binary/source input remains visible and must be resolved or explicitly accepted as a fidelity deviation before affected implementation validation can pass.
+Stage 8 was explicitly approved by the project owner on 2026-08-16. The plan is eligible for Stage 9 task decomposition, but Stage 9 is intentionally not started until a separate instruction to continue. The unresolved font-binary/source input remains visible and must be resolved or explicitly accepted as a fidelity deviation before affected implementation validation can pass.
 
 ## 14. Completion Summary
 
@@ -271,4 +271,5 @@ The plan is ready for Stage 9 task decomposition after explicit project-owner ap
 - Plan corrections: explicit font strategy/stop rule, explicit native-link `href`, protected desktop hero-title treatment, mandatory frontend guidance preflight, clarified page landmark ownership, explicit theme-specific mobile Footer spacing.
 - Remaining risks: distributable font binaries/source metadata; implementation-time asset filenames; responsive thresholds; map interpolation; unresolved social destinations.
 - Open questions or blockers: no blocker for task decomposition; font delivery may block foundation/fidelity acceptance unless resolved or explicitly accepted as a deviation.
-- Recommended next stage: Stage 9 — Decompose into tasks, only after the project owner approves Stage 8.
+- Project-owner decision: Stage 8 approved on 2026-08-16.
+- Recommended next stage: Stage 9 — Decompose into tasks, only after the project owner separately instructs the workflow to continue.
