@@ -1,0 +1,39 @@
+name: Agent P03 Text Reflow Guidance
+on:
+  push:
+    branches: [agent/p01-t01-visual-foundation]
+permissions:
+  contents: read
+jobs:
+  guidance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Confirm workflow context
+        run: |
+          set -euo pipefail
+          node docs/implementation-workflow/cli/design-workflow.mjs context --json > /tmp/context.json
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const c=JSON.parse(fs.readFileSync('/tmp/context.json','utf8'));
+          console.log(JSON.stringify({stage:c.stage,currentTask:c.tasks?.current,codeEdits:c.codeEdits},null,2));
+          if(c.stage?.number!==10||c.tasks?.current?.id!=='P03-T01') throw new Error('P03-T01 is not active.');
+          NODE
+      - name: Retrieve modern web guidance for text reflow
+        run: |
+          set -euo pipefail
+          npx -y modern-web-guidance@latest search "support 200% text zoom without horizontal overflow while preserving responsive layout and keyboard focus" --skill-version 2026_05_16-c5e78707 | tee /tmp/guidance-search.json
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const raw=fs.readFileSync('/tmp/guidance-search.json','utf8');
+          const results=JSON.parse(raw);
+          if(!Array.isArray(results)||results.length===0) throw new Error('No modern-web-guidance results.');
+          const ids=results.slice(0,3).map(r=>r.id).filter(Boolean);
+          console.log(`GUIDANCE_IDS=${ids.join(',')}`);
+          fs.writeFileSync('/tmp/guidance-ids.txt',ids.join(','));
+          NODE
+          IDS="$(cat /tmp/guidance-ids.txt)"
+          npx -y modern-web-guidance@latest retrieve "$IDS"
