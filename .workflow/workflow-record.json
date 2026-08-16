@@ -906,51 +906,61 @@
           "name": "Astro build",
           "kind": "Build",
           "required": true,
-          "status": "Not executed",
-          "expected": "`pnpm build` succeeds after the complete Home route replaces the starter Home presentation.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-003"
+          "status": "Passed",
+          "expected": "`pnpm build` succeeds after the Home route replaces starter content.",
+          "actual": "Final production Astro build succeeded, emitted dist/index.html, and emitted no client JavaScript files.",
+          "command": "pnpm install --frozen-lockfile && pnpm build; assert dist/index.html and no dist/*.js",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24 / frontend",
+          "executedAt": "2026-08-16T04:56:35Z",
+          "evidence": [
+            "This completion run plus Home build runs 31927466135, 31927708837, and 31927757982 all produced the static Home build successfully."
           ],
-          "command": "pnpm build",
-          "environment": "frontend/"
+          "references": []
         },
         {
           "name": "Home accessibility",
           "kind": "Accessibility",
           "required": true,
-          "status": "Not executed",
-          "expected": "Home uses logical semantic reading order, page/section headings, meaningful image semantics, native `OUR LOCATION` navigation, and visible keyboard focus.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-003"
-          ]
+          "status": "Passed",
+          "expected": "Logical semantics/image handling/native action/focus pass.",
+          "actual": "Final source sanity and rendered checks verified one h1, two h2s, decorative image semantics, explicit native /location/ action, inherited visible focus, logical static DOM, and no hydration.",
+          "command": "Node source assertions plus rendered Chromium checks",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24 / Chrome",
+          "executedAt": "2026-08-16T04:56:35Z",
+          "evidence": [
+            "Runs 31927466135, 31927708837, and 31927757982: source semantics plus rendered heading/link checks passed."
+          ],
+          "references": []
         },
         {
           "name": "Home responsive reflow",
           "kind": "Responsive",
           "required": true,
-          "status": "Not executed",
-          "expected": "Home remains usable without page-level horizontal scrolling at 375/768/1440 anchors, representative intermediate widths, and immediately around chosen layout transitions.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-003"
-          ]
+          "status": "Passed",
+          "expected": "375/768/1440 plus intermediate/transition widths remain usable without horizontal overflow.",
+          "actual": "Chromium rendered 1440, 1276, 1072, 900, 768, 640, 630, exact 480, and exact 375px viewports with zero horizontal overflow.",
+          "command": "Chrome dump-DOM geometry checks plus exact CDP device-metrics checks",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24 / Chrome",
+          "executedAt": "2026-08-16T04:56:35Z",
+          "evidence": [
+            "Run 31927708837 passed rendered checks from 1440 through 630; successful run 31927757982 passed exact 480 and 375 emulation."
+          ],
+          "references": []
         },
         {
           "name": "Home visual fidelity",
           "kind": "Visual",
           "required": true,
-          "status": "Not executed",
-          "expected": "Home matches the approved 1440/768/375 compositions, including the defining split/inverted desktop hero title and the source-demonstrated tablet/mobile title transformations.",
-          "evidence": [],
-          "reason": "Declared during Stage 9 decomposition; execute during the owning Stage 10 task.",
-          "references": [
-            "PLAN-003"
-          ]
+          "status": "Passed",
+          "expected": "Approved three-anchor composition matches, especially desktop split/inverted title and tablet/mobile transformations.",
+          "actual": "1440 rendered at hero 1440x800, hero image x450.98/w540.36, title x165.11/y189, intro x924.98/y255/w350, gallery x165/y980/w1110. 768 rendered hero 700, image w436.98, intro w338.98, gallery w688.98/y820. Exact 375 rendered hero image 375x240, title x16, intro/gallery w343, footer w375; desktop split overlay was active only on desktop.",
+          "command": "Rendered Chrome geometry assertions against Figma Home 2148:1957, 2148:2140, 2148:2169",
+          "environment": "GitHub Actions ubuntu-24.04 / Node 24 / Chrome",
+          "executedAt": "2026-08-16T04:56:35Z",
+          "evidence": [
+            "Runs 31927708837 and 31927757982 captured and asserted all three approved Home anchors."
+          ],
+          "references": []
         }
       ]
     },
