@@ -4,7 +4,7 @@ project: Art gallery website
 profile: Standard
 execution_mode: Gated
 created: 2026-08-15
-updated: 2026-08-15
+updated: 2026-08-16
 ---
 
 # Source Baseline
@@ -14,7 +14,7 @@ updated: 2026-08-15
 - Project: Art gallery website
 - Source registry: `.workflow/generated/SOURCE-INDEX.md`
 - Related context: `PROJECT-CONTEXT.md`
-- Operational state: `WORKFLOW-STATE.md`
+- Operational state: `.workflow/workflow-record.json` and generated workflow views
 
 ## Design source evidence
 
@@ -30,7 +30,8 @@ updated: 2026-08-15
 - **Supporting design evidence:** component resources and style-guide documentation on the same page.
 - **Authority:** approved visual and responsive implementation source for this project.
 - **Pin strength:** Time-bound until a named/versioned Figma revision is recorded.
-- **Latest verification:** `VER-010` — Unchanged at Stage 6.
+- **Latest verification:** `VER-015` — Unchanged at Stage 8 after fresh Workflow metadata and Home/Desktop design-context inspection.
+- **Prior downstream verification:** `VER-013` — Unchanged at Stage 7 planning.
 - **Known limitation:** Figma does not by itself define semantic HTML, keyboard/screen-reader behavior, intermediate responsive behavior, or runtime performance.
 
 ## Repository source evidence
@@ -53,18 +54,20 @@ updated: 2026-08-15
 
 ### SRC-REPO-002 — Stage 6 current repository input
 
-- **Role:** Input baseline for Stage 6 and later planning.
+- **Role:** Input baseline for Stage 6 and later repository-aware work.
 - **Status:** Active.
 - **Repository:** `ferfalcon/art-gallery-website`
-- **Relevant application:** `frontend/`
+- **Relevant application:** `frontend/`.
 - **Commit:** `f28f02bb303a4f486e73e2ca1a326751e6c3fd02`.
 - **Branch at capture:** `main`.
 - **Reference in canonical record:** `.`.
 - **Pin strength:** Immutable commit SHA.
 - **Reason created:** after Stage 5, approved PR #7 added `frontend/vercel.json` with the Vercel ignored-build command for docs-only changes.
-- **Relevant inspected paths:** `frontend/package.json`, `frontend/astro.config.mjs`, `frontend/src/`, `frontend/AGENTS.md`, and `frontend/vercel.json`.
-- **Verification:** `VER-012` — current commit and relevant repository structure inspected at Stage 6.
-- **Authority:** current repository structure, Astro/runtime constraints, and repository-owned deployment configuration.
+- **Relevant inspected paths:** `frontend/package.json`, `frontend/astro.config.mjs`, `frontend/src/`, root and nested `AGENTS.md`, `.agents/skills/modern-web-guidance/SKILL.md`, and `frontend/vercel.json`.
+- **Stage 6 verification:** `VER-012` — pinned commit and relevant repository structure inspected.
+- **Stage 7 verification:** `VER-014` — implementation input remained unchanged while current `main` advanced through workflow documentation only.
+- **Latest verification:** `VER-016` — Stage 8 comparison confirmed current `main` at `4fabacc63fc63da2392fbc828c29fc57ca214682` differs from the pinned input only through workflow/documentation outputs and that the `frontend/` subtree remains identical.
+- **Authority:** current repository structure, Astro/runtime constraints, repository operating contract, and repository-owned deployment configuration.
 
 ## Runtime source evidence
 
@@ -75,11 +78,11 @@ updated: 2026-08-15
 - **Source type:** Vercel project/runtime observation.
 - **Reference:** `https://vercel.com/fer-falcons-team/art-gallery-website`
 - **Project:** `fer-falcons-team/art-gallery-website`
-- **Project ID:** `prj_c1Co0SgYyStXUE6Qgd3FgDUBDx5x`
+- **Project ID:** `prj_c1Co0SgYyStXUE6Qgd3FgDUBDx5x`.
 - **Observed Node.js runtime:** `24.x`.
-- **Observed production deployment:** `dpl_7Grr79zVrDMSoHW5f6AK4q9qWGvH`
+- **Observed production deployment:** `dpl_7Grr79zVrDMSoHW5f6AK4q9qWGvH`.
 - **Observed deployment state:** `READY`.
-- **Production domain:** `https://art-gallery-website-ferfalcon.vercel.app/`
+- **Production domain:** `https://art-gallery-website-ferfalcon.vercel.app/`.
 - **Captured:** `2026-08-16T00:32:00.000Z`.
 - **Pin strength:** Time-bound; project settings may change after capture.
 - **Known limitation:** this is supporting architecture evidence, not a Stage 10/11 validation-runtime snapshot.
@@ -98,16 +101,17 @@ The repository change does **not** alter approved visual design, product require
 |---|---|---|
 | `SRC-DS-001` | Design | Visual design, responsive compositions, components, styles, imagery, and content represented in Figma |
 | `SRC-REPO-001` | Historical repository input | Immutable implementation/technical baseline used by approved Stages 0–5 |
-| `SRC-REPO-002` | Current repository input | Current Astro structure, package/runtime constraints, project operating contract, and repository-owned Vercel configuration |
+| `SRC-REPO-002` | Current repository input | Astro structure, package/runtime constraints, project operating contract, and repository-owned Vercel configuration |
 | `SRC-RUN-001` | Supporting runtime evidence | Time-bound Vercel project/runtime observation used by Stage 6 architecture |
 
 ## Stage history
 
 - Stage 0 established `SRC-DS-001` and `SRC-REPO-001`.
 - Stages 1–5 were approved against those inputs and remain valid.
-- Stage 6 reverified `SRC-DS-001` as unchanged.
-- Stage 6 detected the repository change, created `SRC-REPO-002`, performed impact assessment, and limited the rebaseline to architecture and downstream work.
+- Stage 6 reverified `SRC-DS-001`, detected the repository change, created `SRC-REPO-002`, performed impact assessment, and limited the rebaseline to architecture and downstream work.
 - `SRC-RUN-001` was added as supporting evidence for deployment/runtime architecture.
+- Stage 7 reverified `SRC-DS-001` and `SRC-REPO-002` through `VER-013` and `VER-014` before creating the repository-aware implementation plan.
+- Stage 8 reverified the same active inputs through `VER-015` and `VER-016`; neither requires rebaseline or rollback.
 
 ## Rebaseline rule
 
