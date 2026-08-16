@@ -1,6 +1,6 @@
 ---
 artifact: TASKS-INDEX
-status: Reviewed
+status: Approved
 baseline:
   design:
     - SRC-DS-001
@@ -25,8 +25,8 @@ The connected environment cannot execute the local workflow CLI because no check
 
 ## 2. Document Information
 
-- Status: Reviewed; pending explicit project-owner approval for the Stage 9 gate.
-- Version: 0.1
+- Status: Approved by the project owner on 2026-08-16; `GATE-010` is Passed with assumptions.
+- Version: 1.0
 - Last updated: 2026-08-16
 - Project: Art gallery website
 - Source plan: `PLAN.md` / `ART-PLAN`
@@ -48,8 +48,7 @@ The connected environment cannot execute the local workflow CLI because no check
 ### Excluded
 
 - Implementation code or frontend changes.
-- Any Stage 10 task execution.
-- Any Stage 9 approval gate or advancement to Stage 10 before explicit owner approval.
+- Any Stage 10 task execution before a separate workflow continuation advances Stage 9 to Stage 10.
 - New requirements, architecture, routes, services, interactions, social destinations, or Figma edits.
 
 ## 4. Execution Rules
@@ -130,7 +129,7 @@ The connected environment cannot execute the local workflow CLI because no check
 
 | Task | Blocker or coordination risk | Decision owner | Required action | Impact | Status |
 |---|---|---|---|---|---|
-| `P01-T01` | Authoritative distributable font files/source metadata are absent from current repository inputs. | Project owner if fallback is proposed | Resolve matching source-controlled fonts, or explicitly approve the documented fidelity deviation. | Typography visual fidelity cannot pass silently on fallback. | Open risk; does not block Stage 9 decomposition |
+| `P01-T01` | Authoritative distributable font files/source metadata are absent from current repository inputs. | Project owner if fallback is proposed | Resolve matching source-controlled fonts, or explicitly approve the documented fidelity deviation. | Typography visual fidelity cannot pass silently on fallback. | Open risk; accepted for Stage 9 exit |
 | `P02-T01`, `P02-T02` | Both depend on stable shared component contracts. | Implementation workflow | Complete `P01-T02` before either route task starts. | Prevents duplicated/incompatible shared implementations. | Controlled by prerequisites |
 | `P03-T01` | Requires both routes and their output lineage. | Implementation workflow | Complete `P02-T01` and `P02-T02`. | Final regression/preview cannot start early. | Controlled by prerequisites |
 
@@ -167,4 +166,4 @@ The connected environment cannot execute the local workflow CLI because no check
 - [x] Stage 8 safeguards are preserved in owning tasks: fonts, explicit hrefs, Home split-title, modern-web preflight, page landmark ownership, Footer mobile spacing.
 - [x] No task introduces unsupported scope, hydration, runtime service, interactive map, or social destination.
 - [x] The font-source uncertainty remains explicit and cannot be silently treated as passed visual fidelity.
-- [x] Stage 9 remains unapproved until the project owner explicitly approves the task set.
+- [x] Stage 9 was explicitly approved by the project owner; `GATE-010` is Passed with assumptions and the workflow intentionally remains at Stage 9 Ready.
