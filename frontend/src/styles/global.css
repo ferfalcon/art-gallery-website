@@ -51,7 +51,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { min-width: 20rem; background: var(--color-surface); }
+html { min-width: 320px; background: var(--color-surface); }
 body {
   min-height: 100vh;
   margin: 0;
