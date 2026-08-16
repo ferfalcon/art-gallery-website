@@ -35,28 +35,20 @@ jobs:
           cd ..
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
-          const home=fs.readFileSync('frontend/src/pages/index.astro','utf8');
-          const location=fs.readFileSync('frontend/src/pages/location.astro','utf8');
-          const hero=fs.readFileSync('frontend/src/components/HomeHero.astro','utf8');
-          const map=fs.readFileSync('frontend/src/components/MapHero.astro','utf8');
-          const details=fs.readFileSync('frontend/src/components/LocationDetails.astro','utf8');
-          const action=fs.readFileSync('frontend/src/components/PrimaryAction.astro','utf8');
-          const footer=fs.readFileSync('frontend/src/components/Footer.astro','utf8');
-          const all=home+location+hero+map+details+action+footer;
-          const errors=[];const check=(ok,msg)=>{if(!ok)errors.push(msg)};
-          check(home.includes('<main class="home-main"'),'Home main landmark');
-          check(location.includes('<main>'),'Location main landmark');
-          check((hero.match(/<h1\b/g)??[]).length===1,'Home one h1');
-          check((details.match(/<h1\b/g)??[]).length===1,'Location one h1');
-          check(details.includes('<address'),'Location address');
-          check(hero.includes('href="/location/"'),'Home→Location native href');
-          check(map.includes('href="/"'),'Location→Home native href');
-          check(!/client:|onclick|on:click|<iframe\b|navigator\.geolocation|mapbox|leaflet|google\.maps/i.test(all),'No hydration/faux map behavior');
-          check(action.includes(':focus-visible'),'Shared visible focus state');
-          check(!/<a\b/.test(footer),'Social artwork remains noninteractive');
+          const files=['frontend/src/pages/index.astro','frontend/src/pages/location.astro','frontend/src/components/HomeHero.astro','frontend/src/components/MapHero.astro','frontend/src/components/LocationDetails.astro','frontend/src/components/PrimaryAction.astro','frontend/src/components/Footer.astro'];
+          const all=files.map(f=>fs.readFileSync(f,'utf8')).join('\n');
+          const home=fs.readFileSync(files[0],'utf8'), location=fs.readFileSync(files[1],'utf8'), hero=fs.readFileSync(files[2],'utf8'), map=fs.readFileSync(files[3],'utf8'), details=fs.readFileSync(files[4],'utf8'), action=fs.readFileSync(files[5],'utf8'), footer=fs.readFileSync(files[6],'utf8');
+          const errors=[]; const check=(ok,msg)=>{if(!ok)errors.push(msg)};
+          check(home.includes('<main class="home-main"')&&location.includes('<main>'),'main landmarks');
+          check((hero.match(/<h1\b/g)??[]).length===1&&(details.match(/<h1\b/g)??[]).length===1,'one h1 per route');
+          check(details.includes('<address'),'semantic address');
+          check(hero.includes('href="/location/"')&&map.includes('href="/"'),'bidirectional native hrefs');
+          check(!/client:|onclick|on:click|<iframe\b|navigator\.geolocation|mapbox|leaflet|google\.maps/i.test(all),'no hydration/faux map behavior');
+          check(action.includes(':focus-visible'),'shared focus-visible rule');
+          check(!/<a\b/.test(footer),'social artwork noninteractive');
           if(errors.length){console.error(errors.join('\n'));process.exit(1)}
           NODE
-      - name: Browser regression, navigation, focus, resize and reflow
+      - name: Browser integration, visual anchors, keyboard focus and text resize
         run: |
           set -euo pipefail
           CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
@@ -75,36 +67,70 @@ jobs:
           const target=targets.find(t=>t.type==='page');
           const ws=new WebSocket(target.webSocketDebuggerUrl);
           await new Promise((r,j)=>{ws.addEventListener('open',r,{once:true});ws.addEventListener('error',j,{once:true})});
-          let id=0;const pending=new Map();ws.addEventListener('message',e=>{const m=JSON.parse(e.data);if(!m.id)return;const p=pending.get(m.id);if(!p)return;pending.delete(m.id);m.error?p.reject(new Error(m.error.message)):p.resolve(m.result)});
+          let id=0;const pending=new Map();
+          ws.addEventListener('message',e=>{const m=JSON.parse(e.data);if(!m.id)return;const p=pending.get(m.id);if(!p)return;pending.delete(m.id);m.error?p.reject(new Error(m.error.message)):p.resolve(m.result)});
           const send=(method,params={})=>new Promise((resolve,reject)=>{const n=++id;pending.set(n,{resolve,reject});ws.send(JSON.stringify({id:n,method,params}))});
-          await send('Page.enable');await send('Runtime.enable');
+          await send('Page.enable'); await send('Runtime.enable');
           const wait=async()=>{await new Promise(r=>setTimeout(r,180));await send('Runtime.evaluate',{expression:'document.fonts.ready',awaitPromise:true})};
           const evalValue=async expression=>(await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true})).result.value;
+          const rectExpr=`s=>{const n=document.querySelector(s);if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom}}`;
           const widths=[1440,1073,1072,900,768,701,700,631,630,480,375,320];
           const results=[];
           for(const path of ['/','/location/']) for(const width of widths){
             await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});
-            await send('Page.navigate',{url:`http://127.0.0.1:4321${path}`});await wait();
-            const r=await evalValue(`(()=>{const html=document.documentElement;const focus=document.querySelector('a.primary-action');focus?.focus();const s=focus?getComputedStyle(focus):null;return{path:location.pathname,width:innerWidth,overflow:html.scrollWidth-html.clientWidth,h1:document.querySelectorAll('h1').length,main:document.querySelectorAll('main').length,address:document.querySelectorAll('address').length,scripts:document.querySelectorAll('script[src]').length,href:focus?.getAttribute('href'),focusOutline:s?.outlineStyle,focusOutlineWidth:s?.outlineWidth,focusVisible:document.activeElement===focus}})()`);
-            results.push(r);
+            await send('Page.navigate',{url:`http://127.0.0.1:4321${path}`}); await wait();
+            results.push(await evalValue(`(()=>{const rect=${rectExpr};const html=document.documentElement;return{path:location.pathname,width:innerWidth,overflow:html.scrollWidth-html.clientWidth,h1:document.querySelectorAll('h1').length,main:document.querySelectorAll('main').length,address:document.querySelectorAll('address').length,scripts:document.querySelectorAll('script[src]').length,href:document.querySelector('a.primary-action')?.getAttribute('href'),action:rect('a.primary-action'),homeHero:rect('[data-home-hero]'),homeImage:rect('.home-hero__image'),gallery:rect('[data-gallery-content]'),mapHero:rect('[data-map-hero]'),marker:rect('[data-location-marker]'),details:rect('[data-location-details]'),title:rect('h1'),footer:rect('footer'),footerBg:getComputedStyle(document.querySelector('footer')).backgroundColor}})()`));
           }
-          const errors=[];
-          for(const r of results){if(r.overflow>1)errors.push(`${r.path}@${r.width} overflow=${r.overflow}`);if(r.h1!==1||r.main!==1)errors.push(`${r.path}@${r.width} h1/main=${r.h1}/${r.main}`);if(r.scripts!==0)errors.push(`${r.path}@${r.width} scripts=${r.scripts}`);if(!r.focusVisible||r.focusOutline==='none'||parseFloat(r.focusOutlineWidth)<3)errors.push(`${r.path}@${r.width} focus=${r.focusVisible}/${r.focusOutline}/${r.focusOutlineWidth}`);if(r.path==='/'&&(r.href!=='/location/'||r.address!==0))errors.push(`Home contract failed @${r.width}`);if(r.path==='/location/'&&(r.href!=='/'||r.address!==1))errors.push(`Location contract failed @${r.width}`)}
+          const errors=[]; const near=(a,b,t=2)=>Math.abs(a-b)<=t;
+          for(const r of results){
+            if(r.overflow>1)errors.push(`${r.path}@${r.width} overflow=${r.overflow}`);
+            if(r.h1!==1||r.main!==1)errors.push(`${r.path}@${r.width} h1/main=${r.h1}/${r.main}`);
+            if(r.scripts!==0)errors.push(`${r.path}@${r.width} scripts=${r.scripts}`);
+            if(!r.action||r.action.x<0||r.action.right>r.width+1)errors.push(`${r.path}@${r.width} action bounds ${JSON.stringify(r.action)}`);
+            if(r.path==='/'&&(r.href!=='/location/'||r.address!==0))errors.push(`Home contract @${r.width}`);
+            if(r.path==='/location/'&&(r.href!=='/'||r.address!==1))errors.push(`Location contract @${r.width}`);
+          }
+
+          const h1440=results.find(r=>r.path==='/'&&r.width===1440),h768=results.find(r=>r.path==='/'&&r.width===768),h375=results.find(r=>r.path==='/'&&r.width===375);
+          if(!near(h1440.homeHero.height,800)||!near(h1440.gallery.width,1110)||!near(h1440.action.width,260)||!near(h1440.action.height,72)||h1440.footerBg!=='rgb(21, 21, 21)')errors.push(`Home 1440 visual drift ${JSON.stringify(h1440)}`);
+          if(!near(h768.homeHero.height,700)||!near(h768.gallery.width,689)||!near(h768.action.width,260)||!near(h768.action.height,72))errors.push(`Home 768 visual drift ${JSON.stringify(h768)}`);
+          if(!near(h375.homeImage.width,375)||!near(h375.homeImage.height,240)||!near(h375.gallery.width,343)||!near(h375.action.width,260)||!near(h375.action.height,72))errors.push(`Home 375 visual drift ${JSON.stringify(h375)}`);
+          const l1440=results.find(r=>r.path==='/location/'&&r.width===1440),l768=results.find(r=>r.path==='/location/'&&r.width===768),l375=results.find(r=>r.path==='/location/'&&r.width===375);
+          if(!near(l1440.mapHero.height,600)||!near(l1440.details.height,569)||!near(l1440.action.x,156)||!near(l1440.action.width,260)||!near(l1440.marker.x,687)||l1440.footerBg!=='rgb(213, 150, 108)')errors.push(`Location 1440 visual drift ${JSON.stringify(l1440)}`);
+          if(!near(l768.mapHero.height,600)||!near(l768.details.height,411)||!near(l768.action.x,39)||!near(l768.marker.x,351))errors.push(`Location 768 visual drift ${JSON.stringify(l768)}`);
+          if(!near(l375.mapHero.height,550)||!near(l375.details.height,533)||!near(l375.action.x,10)||!near(l375.marker.x,154.5)||!near(l375.footer.width,375))errors.push(`Location 375 visual drift ${JSON.stringify(l375)}`);
+
+          for(const path of ['/','/location/']){
+            await send('Emulation.setDeviceMetricsOverride',{width:768,height:1000,deviceScaleFactor:1,mobile:false});
+            await send('Page.navigate',{url:`http://127.0.0.1:4321${path}`}); await wait();
+            await send('Page.bringToFront');
+            await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab',code:'Tab',windowsVirtualKeyCode:9,nativeVirtualKeyCode:9});
+            await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Tab',code:'Tab',windowsVirtualKeyCode:9,nativeVirtualKeyCode:9});
+            const focus=await evalValue(`(()=>{const a=document.activeElement;const s=a?getComputedStyle(a):null;return{tag:a?.tagName,className:a?.className,href:a?.getAttribute('href'),focusVisible:a?.matches(':focus-visible'),outline:s?.outlineStyle,width:s?.outlineWidth}})()`);
+            if(focus.tag!=='A'||!focus.className.includes('primary-action')||!focus.focusVisible||focus.outline==='none'||parseFloat(focus.width)<3)errors.push(`${path} keyboard focus failed ${JSON.stringify(focus)}`);
+          }
 
           await send('Emulation.setDeviceMetricsOverride',{width:768,height:1000,deviceScaleFactor:1,mobile:false});
-          await send('Page.navigate',{url:'http://127.0.0.1:4321/'});await wait();
-          await evalValue(`document.querySelector('a.primary-action').click(); true`);await wait();
-          const forward=await evalValue(`location.pathname`);if(forward!=='/location/')errors.push(`Native forward navigation landed on ${forward}`);
-          await evalValue(`document.querySelector('a.primary-action').click(); true`);await wait();
-          const back=await evalValue(`location.pathname`);if(back!=='/')errors.push(`Native back navigation landed on ${back}`);
+          await send('Page.navigate',{url:'http://127.0.0.1:4321/'}); await wait();
+          await evalValue(`document.querySelector('a.primary-action').click(); true`); await wait();
+          const forward=await evalValue(`location.pathname`); if(forward!=='/location/')errors.push(`forward navigation=${forward}`);
+          await evalValue(`document.querySelector('a.primary-action').click(); true`); await wait();
+          const back=await evalValue(`location.pathname`); if(back!=='/')errors.push(`back navigation=${back}`);
 
           const resize=[];
-          for(const path of ['/','/location/']) for(const width of [768,375]){
-            await send('Emulation.setDeviceMetricsOverride',{width,height:1200,deviceScaleFactor:1,mobile:false});
-            await send('Page.navigate',{url:`http://127.0.0.1:4321${path}`});await wait();
-            const r=await evalValue(`(()=>{document.documentElement.style.fontSize='200%';const html=document.documentElement;const a=document.querySelector('a.primary-action');const ar=a.getBoundingClientRect();const h=document.querySelector('h1').getBoundingClientRect();return{path:location.pathname,width:innerWidth,overflow:html.scrollWidth-html.clientWidth,action:{x:ar.x,right:ar.right,width:ar.width,height:ar.height},heading:{x:h.x,right:h.right,width:h.width,height:h.height},text:getComputedStyle(document.body).fontSize}})()`);
+          for(const path of ['/','/location/']) for(const width of [1440,768,375]){
+            await send('Emulation.setDeviceMetricsOverride',{width,height:1600,deviceScaleFactor:1,mobile:false});
+            await send('Page.navigate',{url:`http://127.0.0.1:4321${path}`}); await wait();
+            const r=await evalValue(`(()=>{document.documentElement.style.fontSize='200%';const rect=${rectExpr};const html=document.documentElement;const boxes=[...document.querySelectorAll('h1,h2,p,address,a.primary-action')].map(n=>{const x=n.getBoundingClientRect();return{tag:n.tagName,x:x.x,right:x.right,width:x.width,height:x.height}});return{path:location.pathname,width:innerWidth,overflow:html.scrollWidth-html.clientWidth,action:rect('a.primary-action'),heading:rect('h1'),boxes,text:getComputedStyle(document.body).fontSize}})()`);
             resize.push(r);
           }
-          for(const r of resize){if(r.overflow>1)errors.push(`200% text ${r.path}@${r.width} overflow=${r.overflow}`);if(r.action.x<0||r.action.right>r.width+1)errors.push(`200% text ${r.path}@${r.width} action clipped ${JSON.stringify(r.action)}`);if(r.heading.x<0||r.heading.right>r.width+1)errors.push(`200% text ${r.path}@${r.width} heading clipped ${JSON.stringify(r.heading)}`)}
-          console.log(JSON.stringify({results,resize,forward,back},null,2));ws.close();if(errors.length){console.error(errors.join('\n'));process.exit(1)}
+          for(const r of resize){
+            if(r.overflow>1)errors.push(`200% text ${r.path}@${r.width} overflow=${r.overflow}`);
+            if(r.action.x<0||r.action.right>r.width+1)errors.push(`200% text ${r.path}@${r.width} action ${JSON.stringify(r.action)}`);
+            if(r.heading.x<0||r.heading.right>r.width+1)errors.push(`200% text ${r.path}@${r.width} heading ${JSON.stringify(r.heading)}`);
+            for(const b of r.boxes)if(b.x<-1||b.right>r.width+1)errors.push(`200% text ${r.path}@${r.width} ${b.tag} bounds ${JSON.stringify(b)}`);
+          }
+          console.log(JSON.stringify({results,resize,forward,back},null,2));
+          ws.close();
+          if(errors.length){console.error(errors.join('\n'));process.exit(1)}
           NODE
