@@ -1,0 +1,108 @@
+<section class="location-details" aria-labelledby="location-title" data-location-details>
+  <h1 id="location-title" class="location-details__title" data-location-title>Our Location</h1>
+
+  <div class="location-details__content" data-location-copy>
+    <address class="location-details__address">
+      <p class="location-details__street">99 King Street</p>
+      <p class="location-details__locality">
+        <span>Newport</span>
+        <span>RI 02840</span>
+        <span>United States of America</span>
+      </p>
+    </address>
+
+    <p>
+      Our newly opened gallery is located near the Edward King House on 99 King Street, the Modern Art Gallery is free to all visitors and open seven days a week from 8am to 9pm.
+    </p>
+  </div>
+</section>
+
+<style>
+  .location-details {
+    display: grid;
+    inline-size: 100%;
+    block-size: 35.5625rem;
+    grid-template-columns: 21.875rem 33.75rem;
+    align-items: start;
+    justify-content: space-between;
+    padding: 8.125rem 10.3125rem;
+    color: var(--color-surface);
+    background: var(--color-text-strong);
+  }
+
+  .location-details__title {
+    inline-size: 21.875rem;
+    color: inherit;
+    font-size: 4.375rem;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .location-details__content {
+    display: flex;
+    inline-size: 33.75rem;
+    flex-direction: column;
+    gap: var(--space-400);
+    font-size: var(--type-body-large);
+    line-height: var(--leading-body);
+  }
+
+  .location-details__address {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-300);
+    font-style: normal;
+  }
+
+  .location-details__street {
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: var(--font-weight-display-black);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .location-details__locality span {
+    display: block;
+  }
+
+  @media (max-width: 67rem) {
+    .location-details {
+      block-size: 25.6875rem;
+      grid-template-columns: 13.9375rem 24.875rem;
+      padding: 5rem 2.5rem;
+    }
+
+    .location-details__title {
+      inline-size: 13.9375rem;
+      font-size: 3.4375rem;
+      line-height: var(--leading-hero);
+    }
+
+    .location-details__content {
+      inline-size: 24.875rem;
+      gap: var(--space-250);
+      font-size: var(--type-body-medium);
+    }
+
+    .location-details__address {
+      gap: var(--space-250);
+    }
+  }
+
+  @media (max-width: 39.375rem) {
+    .location-details {
+      display: flex;
+      block-size: 33.3125rem;
+      flex-direction: column;
+      gap: var(--space-600);
+      padding: 5rem 1rem;
+    }
+
+    .location-details__title,
+    .location-details__content {
+      inline-size: 100%;
+    }
+  }
+</style>
