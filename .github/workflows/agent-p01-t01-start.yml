@@ -30,6 +30,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      - name: Repair generated workflow projections
+        run: |
+          node docs/implementation-workflow/cli/design-workflow.mjs sync
+          if ! git diff --quiet -- .workflow/generated; then
+            git add .workflow/generated
+            git commit -m "chore: sync workflow projections"
+          fi
+
       - name: Read canonical workflow context
         run: node docs/implementation-workflow/cli/design-workflow.mjs context --json
 
